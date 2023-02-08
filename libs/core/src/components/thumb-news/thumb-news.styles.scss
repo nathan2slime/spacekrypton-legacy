@@ -1,0 +1,69 @@
+:host {
+  @include reset;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+
+    div {
+      padding: 20px;
+      background: var(--foreground-color-up-opac);
+      backdrop-filter: blur(1px);
+      max-height: var(--heading-height);
+      overflow: hidden;
+      height: 100%;
+      cursor: pointer;
+
+      max-height: 160px;
+      backdrop-filter: blur(10px);
+
+      h4 {
+        font-size: 1.2rem;
+        text-align: center;
+        color: var(--primary-color-up);
+        display: -moz-box;
+        display: -webkit-box;
+        overflow: hidden;
+        -moz-box-orient: vertical;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        max-width: 700px;
+        margin: 0px auto;
+      }
+
+      p {
+        display: -moz-box;
+        display: -webkit-box;
+        font-size: 0.875rem;
+        overflow: hidden;
+        -moz-box-orient: vertical;
+        -webkit-box-orient: vertical;
+        line-clamp: 4;
+        padding-top: 15px;
+        opacity: 1;
+        text-align: center;
+        max-width: 600px;
+        -webkit-line-clamp: 4;
+        color: var(--text-color-down);
+        margin: 0px auto;
+      }
+
+      &,
+      h4,
+      p {
+        transition: all 0.3s;
+      }
+
+      @media (max-width: 426px) {
+        max-height: 200px;
+      }
+    }
+  }
+}

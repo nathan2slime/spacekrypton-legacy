@@ -1,0 +1,11 @@
+{
+  "extends": "@kry/tsconfig/base.json",
+  "include": ["src/**.ts", "index.ts"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+:host {
+  @include reset;
+
+  .wrapper {
+    .dialog {
+      padding: 20px;
+      flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
+      justify-content: space-between;
+      height: 100%;
+      background: var(--foreground-up-color);
+
+      &,
+      div {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      kry-icon {
+        display: grid;
+        place-items: center;
+
+        font-size: 1.25rem;
+      }
+
+      > kry-icon {
+        cursor: pointer;
+        color: var(--text-color-light);
+        font-size: 1.7rem;
+        transition: all 0.15s;
+
+        &:hover {
+          color: var(--primary-color-up);
+        }
+      }
+
+      > div:nth-child(2) {
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+
+        h4 {
+          font-size: 1rem;
+          color: var(--primary-color-up);
+          text-align: center;
+          max-width: 250px;
+        }
+
+        kry-icon {
+          font-size: 3rem;
+          color: var(--primary-color-up);
+        }
+      }
+
+      > div:last-child {
+        width: 100%;
+        gap: 15px;
+        align-items: center;
+
+        kry-button {
+          width: 100%;
+          flex: 1;
+
+          span {
+            font-weight: 700;
+            font-family: var(--secondary-font-family);
+            font-size: 0.775rem;
+            letter-spacing: 0.03rem;
+          }
+
+          div {
+            color: var(--text-color-up);
+            justify-content: center;
+            gap: 10px;
+          }
+        }
+      }
+    }
+
+    kry-dialog {
+      --dialog-width: 387px;
+      --dialog-height: 250px;
+      --dialog-mb-width: 90%;
+      --dialog-mb-height: var(--dialog-height);
+    }
+  }
+}

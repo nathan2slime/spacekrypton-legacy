@@ -1,0 +1,59 @@
+:host {
+  @include reset;
+
+  position: absolute;
+  top: 20px;
+  left: 50%;
+
+  transform: translate(-50%, 20px);
+  align-items: center;
+  height: 40px;
+  max-width: fit-content;
+  z-index: 13;
+
+  width: 100%;
+  min-width: fit-content;
+
+  .wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+
+    width: 100%;
+    opacity: 0;
+    padding: 10px 15px;
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    transition: all 0.3s;
+    color: var(--text-color-down);
+    background: var(--foreground-color-up);
+    border: 1px solid var(--primary-color-down);
+    pointer-events: none;
+    border-radius: 10px;
+    font-weight: 600;
+
+    &.secondary {
+      --primary-color-down: var(--secondary-color-down);
+    }
+
+    &.outline {
+      background: transparent;
+      border-color: var(--primary-color-down);
+    }
+
+    &.tertiary {
+      --primary-color-down: var(--tertiary-color-down);
+    }
+
+    &.block {
+      width: 100%;
+    }
+
+    &.open {
+      pointer-events: all;
+      opacity: 1;
+    }
+  }
+}

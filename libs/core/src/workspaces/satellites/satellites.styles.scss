@@ -1,0 +1,181 @@
+:host {
+  @include reset;
+
+  display: block;
+
+  flex: 1;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  background: var(--background-color-down);
+  position: relative;
+
+  .wrapper {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @include scrollbar;
+
+    .earth {
+      height: 70vh;
+      overflow: hidden;
+
+      > div {
+        width: 100%;
+        height: 100%;
+
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 0.875rem;
+        font-weight: 500;
+        font-family: var(--secondary-font-family);
+        color: var(--loading-color-up);
+        text-align: center;
+        word-wrap: break-word;
+
+        ::slotted([slot='3d']) {
+          width: fit-content;
+        }
+      }
+
+      &.loading > div {
+        display: flex;
+      }
+    }
+
+    > header {
+      width: 100%;
+      min-height: 65px;
+      padding: 24px 20px;
+      background-color: var(--foreground-color-down-opac);
+      border-bottom-width: 1.5px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(14px);
+      z-index: 9;
+      position: sticky;
+      top: -1px;
+      gap: 30px;
+
+      &,
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      div {
+        gap: 10px;
+
+        &:last-child {
+          align-items: end;
+          justify-content: flex-end;
+        }
+      }
+
+      &,
+      div:last-child {
+        flex-direction: row;
+      }
+
+      kry-icon {
+        font-size: 1.7rem;
+        color: var(--primary-color-up);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+        color: var(--text-color-down);
+        letter-spacing: 0.03rem;
+        font-weight: 700;
+      }
+
+      kry-search {
+        width: 300px;
+      }
+
+      kry-select {
+        width: 300px;
+      }
+
+      @media (max-width: 750px) {
+        flex-direction: column;
+
+        &,
+        > div {
+          width: 100%;
+        }
+
+        div:first-child {
+          justify-content: flex-start;
+        }
+
+        kry-search,
+        kry-select {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        div:last-child {
+          flex: 1;
+          justify-content: space-between;
+        }
+      }
+
+      @media (max-width: 426px) {
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 30px;
+
+        div {
+          width: fit-content;
+        }
+
+        div:last-child {
+          width: 100%;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 750px) {
+        position: unset;
+      }
+    }
+
+    .group {
+      padding: 20px;
+
+      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+      display: grid;
+      place-items: center;
+      gap: 20px;
+
+      @media (min-width: 376px) {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      }
+    }
+
+    &.loading {
+      overflow: hidden;
+    }
+  }
+
+  kry-alert {
+    --alert-padding: 15px;
+    height: fit-content;
+  }
+
+  div:nth-child(2) {
+    position: relative;
+    height: auto;
+  }
+}

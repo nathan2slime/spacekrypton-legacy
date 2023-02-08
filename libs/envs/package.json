@@ -1,0 +1,17 @@
+{
+  "name": "@kry/envs",
+  "main": "dist/index.js",
+  "description": "Kry I18n",
+  "types": "dist/index.d.ts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "tsup": "^6.5.0",
+    "@kry/tsconfig": "*",
+    "typescript": "^4.9.3"
+  }
+}

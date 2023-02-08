@@ -1,0 +1,14 @@
+@import url('~remixicon/fonts/remixicon.css');
+
+:host {
+  display: grid;
+  place-items: center;
+
+  @include reset;
+
+  i {
+    width: inherit;
+    height: inherit;
+    font-size: inherit;
+  }
+}

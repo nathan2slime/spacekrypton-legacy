@@ -1,0 +1,103 @@
+:host {
+  @include reset;
+
+  .wrapper {
+    .dialog {
+      padding: 20px;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 100%;
+
+      &,
+      div {
+        display: flex;
+      }
+
+      kry-icon {
+        display: grid;
+        place-items: center;
+
+        font-size: 1.25rem;
+      }
+
+      > div:first-child {
+        justify-content: space-between;
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 14px;
+
+        h4 {
+          font-size: 1rem;
+          color: var(--text-color-light);
+          max-width: 200px;
+        }
+
+        div {
+          width: 100%;
+          gap: 17px;
+          align-items: flex-start;
+          justify-content: flex-start;
+
+          kry-icon {
+            font-size: 2.5rem;
+            color: var(--tertiary-color-up);
+          }
+        }
+
+        > kry-icon {
+          cursor: pointer;
+          color: var(--text-color-light);
+          font-size: 1.7rem;
+          transition: all 0.15s;
+
+          &:hover {
+            color: var(--tertiary-color-up);
+          }
+        }
+
+        @media (min-width: 376px) {
+          flex-direction: row;
+          gap: 0px;
+
+          align-items: flex-start;
+
+          div {
+            gap: 10px;
+          }
+        }
+      }
+
+      > div:last-child {
+        gap: 15px;
+        align-items: center;
+
+        kry-button {
+          width: 100%;
+          flex: 1;
+
+          span {
+            font-weight: 700;
+            letter-spacing: 0.03rem;
+            text-transform: uppercase;
+          }
+
+          div {
+            color: var(--text-color-down);
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+          }
+        }
+      }
+    }
+
+    kry-dialog {
+      --dialog-width: 387px;
+      --dialog-height: 200px;
+      --dialog-mb-width: 90%;
+      --dialog-mb-height: var(--dialog-height);
+    }
+  }
+}

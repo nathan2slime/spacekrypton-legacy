@@ -1,0 +1,52 @@
+:host {
+  @include reset;
+
+  display: block;
+
+  .wrapper {
+    width: inherit;
+    height: 40px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid transparent;
+    background: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    gap: 10px;
+
+    kry-icon,
+    & {
+      font-size: 0.805rem;
+      transition: all 0.15s;
+      letter-spacing: 0.02rem;
+      font-family: var(--primary-font-family);
+      color: var(--text-color-down);
+    }
+
+    &.active {
+      background: var(--foreground-color-up);
+
+      kry-icon,
+      & {
+        color: var(--primary-color-up);
+      }
+    }
+
+    &.hover:hover:not(.active) {
+      background: var(--foreground-color-up);
+
+      &,
+      kry-icon {
+        color: var(--primary-color-down);
+      }
+    }
+
+    kry-icon {
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+    }
+  }
+}

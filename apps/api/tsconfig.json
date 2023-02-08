@@ -1,0 +1,4 @@
+{
+  "extends": "@kry/tsconfig/api.json",
+  "include": ["./src/**/*.ts", "index.ts"]
+}

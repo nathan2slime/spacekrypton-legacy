@@ -1,0 +1,106 @@
+:host {
+  @include reset;
+
+  display: block;
+
+  .wrapper {
+    height: 75px;
+    background: var(--foreground-color-down);
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    gap: 14px;
+    padding: 10px 20px;
+
+    h6,
+    p {
+      color: var(--text-color-down);
+      font-size: 0.845rem;
+      text-decoration: none;
+      white-space: nowrap;
+      font-family: var(--secondary-font-family);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    h6 {
+      font-family: var(--primary-font-family);
+      width: 250px;
+
+      @media (min-width: 426px) {
+        width: 100px;
+      }
+    }
+
+    kry-icon {
+      color: var(--text-color-light);
+      transition: all 0.15s;
+      font-size: 1.25rem;
+      cursor: pointer;
+
+      display: grid;
+      place-items: center;
+
+      &:hover {
+        color: var(--secondary-color-up);
+      }
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+
+      &:not(:last-child) {
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      &:last-child {
+        width: 24px;
+        height: 24px;
+
+        justify-content: flex-start;
+        position: absolute;
+        top: 16px;
+        right: 10px;
+      }
+    }
+
+    kry-dropdown {
+      overflow: hidden;
+      width: 160px;
+
+      kry-dropdown-item:last-child {
+        background: var(--tertiary-color-down);
+      }
+    }
+
+    p {
+      font-size: 0.785rem;
+      font-weight: 400;
+      opacity: 0.7;
+      color: var(--text-color-light);
+      width: 250px;
+
+      @media (min-width: 426px) {
+        width: 130px;
+      }
+    }
+
+    > div:first-child {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 100%;
+      overflow: hidden;
+      image-rendering: optimizeQuality;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      flex-shrink: 0;
+    }
+  }
+}

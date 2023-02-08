@@ -1,0 +1,181 @@
+:host {
+  @include reset;
+
+  width: 100%;
+  max-width: 350px;
+  min-height: 200px;
+  display: block;
+
+  --card-hover-color: var(--quartenary-color-up);
+
+  .wrapper {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--foreground-color-down);
+    transition: all 0.3s;
+    animation: fade 0.15s cubic-bezier(0.23, 1, 0.32, 1) both;
+
+    div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      justify-content: space-between;
+      height: 35px;
+      border-top: 1.5px solid var(--border-color-up);
+      transition: all 0.3s;
+
+      p {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--primary-color-up);
+      }
+
+      span {
+        font-size: 0.875rem;
+        color: var(--text-color-down);
+        text-transform: capitalize;
+        font-weight: 400;
+
+        &:first-child {
+          color: var(--text-color-down);
+        }
+      }
+
+      &:first-child {
+        height: 40px;
+        background: var(--foreground-color-up);
+        border: 0px;
+
+        kry-icon {
+          font-size: 1.25rem;
+          color: var(--text-color-down);
+          cursor: pointer;
+        }
+      }
+
+      &:last-child {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.875rem;
+        background: var(--foreground-color-up);
+        font-weight: 500;
+        cursor: pointer;
+
+        &,
+        kry-icon {
+          color: var(--text-color-down);
+        }
+
+        kry-icon {
+          font-size: 1.25rem;
+        }
+
+        &:hover {
+          background: var(--card-hover-color);
+        }
+      }
+
+      &[sat-info] {
+        &:hover {
+          background-color: var(--background-color-down);
+        }
+      }
+    }
+
+    &:hover {
+      box-shadow: var(--card-hover-color) 0px 1px 3px 0px,
+        var(--card-hover-color) 0px 0px 0px 1px;
+
+      div:last-child {
+        background: var(--card-hover-color);
+
+        kry-icon {
+          animation: gelly 1s ease 0s 5 normal forwards;
+        }
+      }
+    }
+
+    &.favorite {
+      > div:first-child {
+        kry-icon {
+          color: var(--primary-color-up);
+        }
+      }
+    }
+
+    &.disable {
+      --card-hover-color: var(--tertiary-color-up);
+      opacity: 0.6;
+
+      p {
+        color: var(--card-hover-color);
+      }
+
+      div:last-child {
+        pointer-events: none;
+      }
+    }
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes gelly {
+    0% {
+      transform: translate(0);
+    }
+
+    10% {
+      transform: translate(-2px, -2px);
+    }
+
+    20% {
+      transform: translate(2px, -2px);
+    }
+
+    30% {
+      transform: translate(-2px, 2px);
+    }
+
+    40% {
+      transform: translate(2px, 2px);
+    }
+
+    50% {
+      transform: translate(-2px, -2px);
+    }
+
+    60% {
+      transform: translate(2px, -2px);
+    }
+
+    70% {
+      transform: translate(-2px, 2px);
+    }
+
+    80% {
+      transform: translate(-2px, -2px);
+    }
+
+    90% {
+      transform: translate(2px, -2px);
+    }
+
+    100% {
+      transform: translate(0);
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "short_name": "Space Krypton",
+  "name": "Space Krypton",
+  "description": "Explore the Universe",
+  "icons": [
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4cc9f0",
+  "background_color": "#0b0c14"
+}

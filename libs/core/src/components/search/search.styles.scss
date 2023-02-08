@@ -1,0 +1,106 @@
+:host {
+  @include reset;
+
+  display: block;
+
+  .wrapper {
+    font-size: inherit;
+
+    &.secondary {
+      --primary-color-up: var(--secondary-color-up);
+      --primary-color-down: var(--secondary-color-down);
+    }
+
+    width: inherit;
+    max-width: inherit;
+    height: 40px;
+
+    display: flex;
+    text-align: inherit;
+    justify-content: flex-start;
+    background: var(--foreground-color-up);
+    border-radius: 10px;
+    overflow: hidden;
+
+    input,
+    button {
+      color: var(--text-color-down);
+      font-family: var(--font-family);
+      font-size: 0.83rem;
+      background: transparent;
+      letter-spacing: 0.02rem;
+      border: none;
+
+      text-align: inherit;
+      outline: none;
+
+      &::placeholder {
+        color: var(--placeholder-color);
+      }
+    }
+
+    button {
+      width: 45px;
+      height: 40px;
+      background: var(--primary-color-up);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+      border-radius: 0px 10px 10px 0px;
+      color: var(--text-color-up);
+
+      &,
+      kry-icon {
+        display: grid;
+        place-items: center;
+        font-size: 1.175rem;
+      }
+
+      &:hover {
+        background: var(--primary-color-down);
+      }
+    }
+
+    &.loading kry-icon {
+      animation: rotate 0.6s ease-in-out infinite;
+    }
+
+    input {
+      width: 100%;
+      height: inherit;
+      padding: 12px;
+      resize: vertical;
+      font-size: 0.875rem;
+      transition: border 0.15s;
+      border-radius: 10px 0px 0px 10px;
+      border: 1px solid var(--border-color-up);
+      border-right: 0px;
+
+      &::selection {
+        background: var(--primary-color-down);
+        color: var(--text-color-up);
+      }
+    }
+
+    &.focus {
+      input {
+        border-color: var(--primary-color-up);
+      }
+    }
+
+    &.invalid {
+      input {
+        border-color: var(--tertiary-color-up);
+      }
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

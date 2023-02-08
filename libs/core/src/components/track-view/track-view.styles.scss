@@ -1,0 +1,55 @@
+:host {
+  @include reset;
+
+  width: 100%;
+  max-width: 100%;
+  display: block;
+
+  .wrapper {
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.3s;
+    background: var(--background-color-down);
+    animation: fade 0.15s cubic-bezier(0.23, 1, 0.32, 1) both;
+    border-radius: 10px;
+
+    div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+
+      justify-content: space-between;
+      background-color: var(--foreground-color-down);
+      height: 50px;
+      transition: all 0.3s;
+
+      span {
+        font-size: 0.875rem;
+        color: var(--secondary-color-up);
+        text-transform: capitalize;
+        font-weight: 400;
+
+        &:first-child {
+          font-weight: 600;
+          color: var(--text-color-light);
+        }
+      }
+
+      &:nth-of-type(odd) {
+        background: var(--background-color-down);
+      }
+    }
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}

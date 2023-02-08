@@ -1,0 +1,3 @@
+{
+  "extends": "@kry/tsconfig/cypress.json"
+}

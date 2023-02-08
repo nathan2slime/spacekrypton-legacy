@@ -1,0 +1,118 @@
+:host {
+  @include reset;
+
+  .wrapper {
+    > span {
+      color: var(--tertiary-color-up);
+      font-size: 0.78rem;
+      display: block;
+      margin-top: 6px;
+    }
+
+    kry-icon {
+      font-size: 1.25rem;
+      color: var(--text-color-light);
+      transition: all 0.15s;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--primary-color-up);
+      }
+    }
+
+    > div:first-child {
+      height: 40px;
+      gap: 14px;
+      display: flex;
+      align-items: center;
+      background: var(--foreground-color-down);
+      border-radius: 10px 10px 0px 0px;
+      padding: 12px;
+    }
+
+    > div:first-child,
+    .ProseMirror {
+      border: 1px solid var(--border-color-up);
+    }
+
+    kry-dropdown {
+      padding: 20px;
+      background: var(--foreground-color-opac-down);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      border: 1px solid var(--border-color-up);
+      overflow: hidden;
+      display: flex;
+      gap: 10px;
+      color: var(--text-color-up);
+
+      span {
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      kry-icon,
+      span {
+        color: var(--text-color-up);
+      }
+
+      &:hover kry-icon {
+        color: var(--text-color-up);
+      }
+    }
+
+    .ProseMirror {
+      padding: 12px;
+
+      color: var(--text-color-down);
+      transition: all 0.15s;
+      font-family: var(--font-family);
+      font-size: 0.83rem;
+      letter-spacing: 0.02rem;
+      border-radius: 0px 0px 10px 10px;
+      background: var(--foreground-color-up);
+      height: var(--editor-height, 300px);
+      overflow: hidden;
+      overflow-y: auto;
+
+      @include scrollbar;
+
+      &,
+      p,
+      span,
+      strong,
+      i {
+        font-size: 0.875rem;
+        color: var(--text-color-down);
+      }
+
+      a {
+        color: var(--primary-color-down);
+      }
+
+      h1,
+      h2 {
+        margin: 15px 0px;
+        font-size: 1rem;
+        color: var(--text-color-light);
+      }
+
+      img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 20px;
+        margin: 15px 0px;
+      }
+
+      &:focus {
+        border-color: var(--primary-color-up);
+      }
+    }
+
+    &.invalid {
+      .ProseMirror {
+        border-color: var(--tertiary-color-up);
+      }
+    }
+  }
+}
