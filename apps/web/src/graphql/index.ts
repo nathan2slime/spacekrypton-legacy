@@ -14,7 +14,20 @@ export const client = new ApolloClient({
     Authorization: getLocalStorageItem(envs.localStorageKeys.token),
     'content-language': getLocalStorageItem(envs.localStorageKeys.lang) || 'en',
   },
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    resultCaching: false,
+    addTypename: false,
+  }),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  },
   ssrMode: true,
 });
 
@@ -41,8 +54,13 @@ const graphql = async <F, T extends {}>({
         variables,
       })
   )
-    .then(res => res)
+    .then(res => {
+      console.log(res);
+
+      return res;
+    })
     .catch(err => {
+      console.log(err);
       notify &&
         dispatchCustomEvent<KryAlert>('setAppAlert', document, {
           title: err.message,

@@ -90,9 +90,9 @@ export class SatellitesServices {
     throw getErrorMessage(123, lang);
   }
 
-  async search(data: SearchSatelliteInput, lang: AppI18nLang) {
-    const { search, order, sort, altitude, latitude, longitude } = data;
-    log.start('starting search with', data);
+  async search(payload: SearchSatelliteInput, lang: AppI18nLang) {
+    const { search, order, sort, altitude, latitude, longitude } = payload;
+    log.start('starting search with', payload);
 
     const {
       data: { member },
@@ -104,9 +104,9 @@ export class SatellitesServices {
     if (status != 200) throw getErrorMessage(115, lang);
     if (member.length == 0) throw getErrorMessage(114, lang);
 
-    const res = await Promise.all(
-      member.slice(0, 8).map(async sat => {
-        return await this.positions(
+    const data = await Promise.allSettled(
+      member.slice(0, 8).map(async sat =>
+        this.positions(
           {
             altitude,
             latitude,
@@ -115,11 +115,13 @@ export class SatellitesServices {
             seconds: 1,
           },
           lang
-        );
-      })
+        )
+      )
     );
 
+    const res = data.filter(e => e.status === 'fulfilled').map((f: any) => f.value);
     log.success(`search performed with ${res.length} results`);
+
     return res;
   }
 }

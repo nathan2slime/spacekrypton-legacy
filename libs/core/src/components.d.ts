@@ -9,6 +9,7 @@ import { KryAlert, KryAnchor, KryButtonBold, KryButtonType, KryColor, KryInputTy
 import { MenuItem, UserType } from "./composites/sidebar/sidebar.model";
 import { AppI18nLang } from "@kry/i18n";
 import { KryMapPoint } from "./components/map/map.model";
+import { ZoomPanOptions } from "leaflet";
 import { News } from "./workspaces/news/news.model";
 import { FavoriteSatelliteDetail, FilterSatellites, Satellite } from "./workspaces/satellites/satellites.model";
 import { SelectValue } from "./components/select/select.model";
@@ -169,10 +170,11 @@ export namespace Components {
         "markHome": boolean;
         "maxZoom": number;
         "minZoom": number;
-        "onFly": (latlang: [number, number], zoom?: number) => Promise<void>;
+        "onFly": (latlang: [number, number], zoom?: number, options?: ZoomPanOptions) => Promise<void>;
         "points": KryMapPoint[];
         "resizeMap": () => Promise<void>;
         "trace": boolean;
+        "track": boolean;
         "unknowIcon": string;
         "zoom": number;
     }
@@ -253,8 +255,8 @@ export namespace Components {
         "viewMapLabel": string;
     }
     interface KryTrack {
-        "alert": KryAlert;
         "favorite": boolean;
+        "language": AppI18nLang;
         "loading": boolean;
         "satellite": Satellite;
     }
@@ -263,10 +265,11 @@ export namespace Components {
         "dec": number;
         "eclipsed": boolean;
         "elevation": number;
+        "language": AppI18nLang;
+        "latitude": number;
+        "longitude": number;
         "ra": number;
         "sataltitude": number;
-        "satlatitude": number;
-        "satlongitude": number;
         "timestamp": string;
     }
     interface KryViewNews {
@@ -800,6 +803,7 @@ declare namespace LocalJSX {
         "onKryClickMarkMap"?: (event: KryMapCustomEvent<number>) => void;
         "points"?: KryMapPoint[];
         "trace"?: boolean;
+        "track"?: boolean;
         "unknowIcon"?: string;
         "zoom"?: number;
     }
@@ -903,10 +907,9 @@ declare namespace LocalJSX {
         "viewMapLabel"?: string;
     }
     interface KryTrack {
-        "alert"?: KryAlert;
         "favorite"?: boolean;
+        "language"?: AppI18nLang;
         "loading"?: boolean;
-        "onKryCloseAlert"?: (event: KryTrackCustomEvent<boolean>) => void;
         "onKryFallback"?: (event: KryTrackCustomEvent<boolean>) => void;
         "onKryFavoriteSatellite"?: (event: KryTrackCustomEvent<boolean>) => void;
         "onKryLocation"?: (event: KryTrackCustomEvent<false | GeolocationPosition>) => void;
@@ -919,10 +922,11 @@ declare namespace LocalJSX {
         "dec"?: number;
         "eclipsed"?: boolean;
         "elevation"?: number;
+        "language"?: AppI18nLang;
+        "latitude"?: number;
+        "longitude"?: number;
         "ra"?: number;
         "sataltitude"?: number;
-        "satlatitude"?: number;
-        "satlongitude"?: number;
         "timestamp"?: string;
     }
     interface KryViewNews {

@@ -1,3 +1,4 @@
+import { AppI18nLang, langs } from '@kry/i18n';
 import { Component, Host, h, Prop } from '@stencil/core';
 
 @Component({
@@ -6,9 +7,10 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class KryTrackView {
-  @Prop() satlongitude: number;
-  @Prop() satlatitude: number;
+  @Prop() longitude: number;
+  @Prop() latitude: number;
   @Prop() eclipsed: boolean;
+  @Prop() language: AppI18nLang;
   @Prop() timestamp: string;
   @Prop() sataltitude: number;
   @Prop() azimuth: number;
@@ -17,46 +19,49 @@ export class KryTrackView {
   @Prop() dec: number;
 
   render() {
+    const i18n = langs[this.language].web;
+    const satI18n = i18n.satellites;
+
     return (
       <Host>
         <div class="wrapper">
           <div>
-            <span>Longitude</span>
-            <span>{this.satlongitude}</span>
+            <span>{satI18n.longitude}</span>
+            <span>{this.longitude}</span>
           </div>
 
           <div>
-            <span>Latitude</span>
-            <span>{this.satlatitude}</span>
+            <span>{satI18n.latitude}</span>
+            <span>{this.latitude}</span>
           </div>
 
           <div>
-            <span>Timestamp</span>
+            <span>{satI18n.timestamp}</span>
             <span>{this.timestamp}</span>
           </div>
 
           <div>
-            <span>Eclipsed</span>
-            <span>{this.eclipsed ? 'yes' : 'no'}</span>
+            <span>{satI18n.eclipsed}</span>
+            <span>{this.eclipsed ? i18n.yes : i18n.no}</span>
           </div>
 
           <div>
-            <span>Declination</span>
+            <span>{satI18n.declination}</span>
             <span>{this.dec}</span>
           </div>
 
           <div>
-            <span>Azimuth</span>
+            <span>{satI18n.azimuth}</span>
             <span>{this.azimuth}</span>
           </div>
 
           <div>
-            <span>Right ascension</span>
+            <span>{satI18n.rightAscension}</span>
             <span>{this.ra}</span>
           </div>
 
           <div>
-            <span>Elevation</span>
+            <span>{satI18n.elevation}</span>
             <span>{this.elevation}</span>
           </div>
         </div>

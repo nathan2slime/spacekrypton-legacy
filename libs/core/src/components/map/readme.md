@@ -19,6 +19,7 @@
 | `minZoom`    | `min-zoom`    |             | `number`        | `1`                               |
 | `points`     | --            |             | `KryMapPoint[]` | `[]`                              |
 | `trace`      | `trace`       |             | `boolean`       | `undefined`                       |
+| `track`      | `track`       |             | `boolean`       | `undefined`                       |
 | `unknowIcon` | `unknow-icon` |             | `string`        | `'ri-checkbox-blank-circle-fill'` |
 | `zoom`       | `zoom`        |             | `number`        | `3`                               |
 
@@ -30,7 +31,7 @@
 
 ## Methods
 
-### `onFly(latlang: [number, number], zoom?: number) => Promise<void>`
+### `onFly(latlang: [number, number], zoom?: number, options?: ZoomPanOptions) => Promise<void>`
 
 #### Returns
 

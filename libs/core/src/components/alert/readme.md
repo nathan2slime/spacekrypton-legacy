@@ -24,7 +24,6 @@
 
 - [kry-app](../../workspaces/app)
 - [kry-create-news](../../workspaces/create-news)
-- [kry-track](../../workspaces/track)
 
 ### Graph
 
@@ -32,7 +31,6 @@
 graph TD;
   kry-app --> kry-alert
   kry-create-news --> kry-alert
-  kry-track --> kry-alert
   style kry-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

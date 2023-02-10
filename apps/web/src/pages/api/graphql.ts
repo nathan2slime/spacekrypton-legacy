@@ -20,7 +20,9 @@ const server = new ApolloServer<AppContext>({
   schema,
   formatError: (error: any) => {
     const code = error.extensions.code;
-    log.error(appError(code, 'en') || error.message, code);
+    const message = (appError(code, 'en') || error.message) as string;
+
+    log.error(message.toLowerCase(), code);
 
     return {
       message: error.message,

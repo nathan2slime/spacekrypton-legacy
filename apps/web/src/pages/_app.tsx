@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KryApp } from '@kry/react';
 import { themes } from '@kry/themes';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { ThemeProvider } from 'styled-components';
 
 import { withAppState } from '@/components/guards/state';
@@ -13,6 +14,7 @@ import { AuthProvider } from '@/components/providers/auth';
 import { AppState } from '@/store';
 
 import GlobalStyle, { Fonts } from '@/global';
+import { seo } from '@/config';
 
 import 'remixicon/fonts/remixicon.css';
 
@@ -54,6 +56,7 @@ const App: FC<AppProps> = ({ Component, ...props }) => {
         </KryApp>
       </AuthProvider>
 
+      <NextSeo {...seo} />
       <Fonts />
 
       <GlobalStyle />

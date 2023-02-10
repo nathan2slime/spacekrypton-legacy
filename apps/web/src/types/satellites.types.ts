@@ -2,6 +2,7 @@ import {
   Altitude,
   AltitudeInput,
   Satellite,
+  SatellitePositionInput,
   SearchSatelliteInput,
 } from '@kry/api/src/graphql/schemas/satellites.schemas';
 
@@ -31,8 +32,16 @@ export type SearchSatellitePayload = {
   data: SearchSatelliteInput;
 };
 
+export type TrackSatellitePayload = {
+  data: SatellitePositionInput;
+};
+
 export type SearchSatelliteResponse = {
   SearchSatellite: Satellite[];
+};
+
+export type TrackSatelliteResponse = {
+  TrackSatellite: Satellite;
 };
 
 export type UserLocation = {
@@ -54,4 +63,8 @@ export type SatelliteState = {
   location?: UserLocation;
   view?: SatellitesView;
   loading3d: boolean;
+};
+
+export type SatellitesStaticPaths = {
+  id: string;
 };

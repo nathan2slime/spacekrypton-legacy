@@ -97,6 +97,10 @@
       display: grid;
       place-items: center;
       padding: 15px 20px;
+
+      kry-sidebar-item {
+        width: 100%;
+      }
     }
 
     kry-dropdown {

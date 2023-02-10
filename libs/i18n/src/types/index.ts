@@ -8,6 +8,7 @@ export type AppI18nErr = {
   languageNotAvailable: string;
   errorUnknow: string;
   notAuthorized: string;
+  timeoutError: string;
   unableSearchSatellites: string;
   noSatellitesFound: string;
   unableGetAltitude: string;
@@ -35,6 +36,10 @@ export type WebI18n = {
     toggleView: string;
     offline: string;
     azimuth: string;
+    declination: string;
+    rightAscension: string;
+    elevation: string;
+    timestamp: string;
     eclipsed: string;
     getAltitude: string;
     tracking: string;
@@ -42,6 +47,8 @@ export type WebI18n = {
     results: string;
     track: string;
   };
+  yes: string;
+  no: string;
   sidebar: {
     logout: string;
     profile: string;
