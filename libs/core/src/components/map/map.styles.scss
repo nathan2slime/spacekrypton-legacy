@@ -77,6 +77,14 @@
           font-size: 1.25rem;
           color: var(--secondary-color-up);
         }
+
+        img {
+          width: 30px;
+        }
+      }
+
+      .leaflet-marker-pane > * {
+        transition: transform 0.3s linear;
       }
     }
   }

@@ -37,6 +37,10 @@
         text-align: center;
         font-family: var(--primary-font-family);
       }
+
+      @media (max-width: 321px) {
+        padding: 0px 20px;
+      }
     }
 
     &,

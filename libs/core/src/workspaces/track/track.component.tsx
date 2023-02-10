@@ -1,9 +1,9 @@
+import { AppI18nLang, langs } from '@kry/i18n';
 import { Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { Component, Host, h, Watch, State } from '@stencil/core';
 
 import { KryMapPoint } from '../../components/map/map.model';
 import { Satellite, SatellitePosition } from '../satellites/satellites.model';
-import { KryAlert } from '../../utils/types';
 
 @Component({
   tag: 'kry-track',
@@ -12,18 +12,16 @@ import { KryAlert } from '../../utils/types';
 })
 export class KryTrack {
   @Prop() satellite: Satellite;
+  @Prop() language: AppI18nLang;
   @Prop() favorite: boolean;
   @Prop() loading: boolean;
-  @Prop() alert: KryAlert;
 
   @State() location: GeolocationPosition;
   @State() lines: KryMapPoint[] = [];
   @State() points: KryMapPoint[] = [];
   @State() dialog: boolean;
-  @State() loaded: boolean;
   @State() position = 0;
 
-  @Event({ composed: false }) kryCloseAlert: EventEmitter<boolean>;
   @Event({ composed: false }) kryFallback: EventEmitter<boolean>;
   @Event({ composed: false }) kryLocation: EventEmitter<false | GeolocationPosition>;
   @Event({ composed: false }) kryRequestTrack: EventEmitter<boolean>;
@@ -54,7 +52,7 @@ export class KryTrack {
 
   @Watch('position')
   listenPosition() {
-    if (this.position == 270) {
+    if (this.position == 350) {
       this.kryRequestTrack.emit(true);
     }
   }
@@ -64,7 +62,6 @@ export class KryTrack {
     if (this.controller) clearInterval(this.controller);
 
     this.position = 0;
-    this.loaded = true;
     const { positions } = this.satellite;
     const pointConfig = {
       icon: 'ri-space-ship-fill',
@@ -80,18 +77,27 @@ export class KryTrack {
     ];
 
     this.controller = setInterval(() => {
-      this.points = [
-        {
-          ...this.lines[this.position + 1],
-          ...pointConfig,
-        },
-      ];
+      const data = this.lines[this.position + 1];
 
-      this.position += 1;
+      if (data) {
+        this.points = [
+          {
+            ...data,
+            ...pointConfig,
+          },
+        ];
+
+        this.position += 1;
+      } else {
+        this.kryRequestTrack.emit(true);
+
+        clearTimeout(this.controller);
+      }
     }, 1000);
 
     if (this.map) {
       this.map.onFly(this.lines[0].latlng);
+      this.map.resizeMap();
     }
   }
 
@@ -125,9 +131,7 @@ export class KryTrack {
           this.location = el;
           this.kryLocation.emit(el);
         },
-        () => {
-          this.dialog = true;
-        }
+        () => (this.dialog = true)
       );
     } else {
       this.dialog = true;
@@ -135,7 +139,8 @@ export class KryTrack {
   };
 
   render() {
-    const isLoading = this.dialog ? false : !this.loading ? !this.location : this.loading;
+    const isLoading = this.dialog ? false : this.loading;
+    const i18n = langs[this.language].web.satellites;
 
     const currentPosition = this.satellite?.positions[this.position];
 
@@ -167,33 +172,30 @@ export class KryTrack {
             )}
           </header>
 
-          <kry-map
-            ref={el => (this.map = el)}
-            latitude={this.location?.coords.latitude}
-            longitude={this.location?.coords.longitude}
-            lines={this.lines}
-            points={this.points}
-            trace
-            markHome
-          />
+          {!!this.location && (
+            <kry-map
+              ref={el => (this.map = el)}
+              latitude={this.location.coords.latitude}
+              longitude={this.location.coords.longitude}
+              lines={this.lines}
+              points={this.points}
+              trace
+              markHome
+              track
+              labelHome={i18n.you}
+            />
+          )}
 
           <div>
             <kry-track-view
               {...currentPosition}
+              language={this.language}
               timestamp={new Date(currentPosition?.timestamp).toLocaleString()}
             />
           </div>
         </div>
 
         {isLoading && <slot />}
-
-        <kry-alert
-          {...this.alert}
-          time={3000}
-          onKryClose={() => this.kryCloseAlert.emit(true)}
-        >
-          {this.alert.title}
-        </kry-alert>
       </Host>
     );
   }

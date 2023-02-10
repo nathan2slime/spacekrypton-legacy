@@ -6,8 +6,8 @@
 
 | Property    | Attribute  | Description | Type                                                            | Default     |
 | ----------- | ---------- | ----------- | --------------------------------------------------------------- | ----------- |
-| `alert`     | --         |             | `{ color: KryColor; open: boolean; title?: string; }`           | `undefined` |
 | `favorite`  | `favorite` |             | `boolean`                                                       | `undefined` |
+| `language`  | `language` |             | `"en" \| "pt-BR"`                                               | `undefined` |
 | `loading`   | `loading`  |             | `boolean`                                                       | `undefined` |
 | `satellite` | --         |             | `{ id: number; name: string; positions: SatellitePosition[]; }` | `undefined` |
 
@@ -15,7 +15,6 @@
 
 | Event                  | Description | Type                                          |
 | ---------------------- | ----------- | --------------------------------------------- |
-| `kryCloseAlert`        |             | `CustomEvent<boolean>`                        |
 | `kryFallback`          |             | `CustomEvent<boolean>`                        |
 | `kryFavoriteSatellite` |             | `CustomEvent<boolean>`                        |
 | `kryLocation`          |             | `CustomEvent<GeolocationPosition \| boolean>` |
@@ -30,7 +29,6 @@
 - [kry-icon](../../components/icon)
 - [kry-map](../../components/map)
 - [kry-track-view](../../components/track-view)
-- [kry-alert](../../components/alert)
 
 ### Graph
 
@@ -40,7 +38,6 @@ graph TD;
   kry-track --> kry-icon
   kry-track --> kry-map
   kry-track --> kry-track-view
-  kry-track --> kry-alert
   kry-dialog-location --> kry-dialog
   kry-dialog-location --> kry-icon
   kry-dialog-location --> kry-button

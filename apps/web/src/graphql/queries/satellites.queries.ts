@@ -27,3 +27,24 @@ export const searchSatellitesQuery = gql`
     }
   }
 `;
+
+export const trackSatelliteQuery = gql`
+  query SatellitePosition($data: SatellitePositionInput!) {
+    TrackSatellite(data: $data) {
+      positions {
+        elevation
+        altitude
+        dec
+        eclipsed
+        azimuth
+        latitude
+        ra
+        timestamp
+        longitude
+      }
+
+      name
+      id
+    }
+  }
+`;

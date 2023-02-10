@@ -17,5 +17,6 @@ export const getAppErrors = (lang: AppI18nLang = 'en'): AppError => {
     115: err.unableSearchSatellites,
     111: err.notAuthorized,
     123: err.unableTrackSatellite,
+    116: err.timeoutError,
   };
 };

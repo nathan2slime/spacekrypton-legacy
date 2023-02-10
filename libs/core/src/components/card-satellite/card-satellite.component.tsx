@@ -20,7 +20,9 @@ export class KryCardSatellite {
   @Event({ composed: false }) kryTrackSatellite: EventEmitter<boolean>;
 
   render() {
-    const i18n = langs[this.language].web.satellites;
+    const i18n = langs[this.language].web;
+    const satI18n = i18n.satellites;
+
     const disable = this.satlongitude == 0 || this.satlatitude == 0;
 
     return (
@@ -45,23 +47,23 @@ export class KryCardSatellite {
           </div>
 
           <div sat-info>
-            <span>{i18n.longitude}</span>
+            <span>{satI18n.longitude}</span>
             <span>{this.satlongitude}</span>
           </div>
 
           <div sat-info>
-            <span>{i18n.latitude}</span>
+            <span>{satI18n.latitude}</span>
             <span>{this.satlatitude}</span>
           </div>
 
           <div sat-info>
-            <span>{i18n.azimuth}</span>
+            <span>{satI18n.azimuth}</span>
             <span>{this.azimuth}</span>
           </div>
 
           <div sat-info>
-            <span>{i18n.eclipsed}</span>
-            <span>{this.eclipsed ? 'yes' : 'no'}</span>
+            <span>{satI18n.eclipsed}</span>
+            <span>{this.eclipsed ? i18n.yes : i18n.no}</span>
           </div>
 
           <div onClick={() => this.kryTrackSatellite.emit(true)}>
@@ -70,7 +72,7 @@ export class KryCardSatellite {
             ) : (
               <kry-icon name="ri-pin-distance-fill" />
             )}
-            {disable ? i18n.offline : i18n.track}
+            {disable ? satI18n.offline : satI18n.track}
           </div>
         </div>
       </Host>

@@ -7,6 +7,7 @@ import {
   TypedDocumentNode,
 } from '@apollo/client';
 import { KryAlert } from '@kry/core/dist/types/utils/types';
+import { AppI18nLang, langs } from '@kry/i18n';
 
 export const client = new ApolloClient({
   uri: '/api/graphql',
@@ -14,7 +15,20 @@ export const client = new ApolloClient({
     Authorization: getLocalStorageItem(envs.localStorageKeys.token),
     'content-language': getLocalStorageItem(envs.localStorageKeys.lang) || 'en',
   },
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    resultCaching: false,
+    addTypename: false,
+  }),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  },
   ssrMode: true,
 });
 
@@ -25,32 +39,42 @@ type Cronos<T> = {
   notify?: boolean;
 };
 
+const sendMessage = (message: string) => {
+  dispatchCustomEvent<KryAlert>('setAppAlert', document, {
+    title: message,
+    color: 'tertiary',
+    open: true,
+  });
+};
+
 const graphql = async <F, T extends {}>({
   query,
   type = 'query',
   variables,
   notify = true,
-}: Cronos<T>) =>
-  (type == 'mutation'
-    ? client.mutate<F, T>({
-        mutation: query,
-        variables,
-      })
-    : client.query<F, T>({
-        query,
-        variables,
-      })
-  )
-    .then(res => res)
-    .catch(err => {
-      notify &&
-        dispatchCustomEvent<KryAlert>('setAppAlert', document, {
-          title: err.message,
-          color: 'tertiary',
-          open: true,
-        });
+}: Cronos<T>) => {
+  try {
+    const { data, errors } = await (type == 'mutation'
+      ? client.mutate<F, T>({
+          mutation: query,
+          variables,
+        })
+      : client.query<F, T>({
+          query,
+          variables,
+        }));
 
-      return { data: null, errors: err };
-    });
+    if (errors && notify) {
+      sendMessage(errors[0].message);
+    }
+
+    return { data, errors };
+  } catch (error) {
+    const lang = getLocalStorageItem(envs.localStorageKeys.lang);
+    sendMessage(langs[lang as AppI18nLang].err.timeoutError);
+
+    return { data: null, errors: error };
+  }
+};
 
 export default graphql;

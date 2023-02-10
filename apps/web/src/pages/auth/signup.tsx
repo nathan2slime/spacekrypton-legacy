@@ -81,7 +81,7 @@ const Signup: NextPage = () => {
   return (
     <KryLogin
       type="signup"
-      action={i18n.sidebar.signup}
+      action={i18n.sidebar.signup.toUpperCase()}
       redirect={i18n.sidebar.login}
       icon="/logo.png"
       background={background.src}

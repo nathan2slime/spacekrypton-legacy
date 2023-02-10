@@ -20,6 +20,7 @@ import {
   marker,
   polyline,
   tileLayer,
+  ZoomPanOptions,
 } from 'leaflet';
 
 import { KryMapPoint } from './map.model';
@@ -41,6 +42,7 @@ export class KryMap {
   @Prop() homeIcon: string = 'ri-map-pin-user-fill';
   @Prop() maxZoom: number = 8;
   @Prop() labelHome: string = '';
+  @Prop() track: boolean;
   @Prop() zoom: number = 3;
   @Prop() points: KryMapPoint[] = [];
   @Prop() lines: KryMapPoint[] = [];
@@ -61,10 +63,12 @@ export class KryMap {
     className: 'tooltip',
   };
 
-  getPointIcon = (name?: string, size: number = 1.25) =>
+  getPointIcon = (icon: boolean, name?: string, size: number = 1.25) =>
     divIcon({
       popupAnchor: [0, -20],
-      html: `<kry-icon style="font-size: ${size}rem" name=${name || this.unknowIcon} />`,
+      html: icon
+        ? `<kry-icon style="font-size: ${size}rem" name=${name || this.unknowIcon} />`
+        : `<img src="/assets/icons/satellite.svg" />`,
     });
 
   @Watch('latitude')
@@ -76,8 +80,8 @@ export class KryMap {
   }
 
   @Method()
-  async onFly(latlang: [number, number], zoom = 6) {
-    this.view.flyTo(latlang, zoom);
+  async onFly(latlang: [number, number], zoom = 6, options?: ZoomPanOptions) {
+    this.view.flyTo(latlang, zoom, options);
 
     const mark = this.markes.find(mark => mark.getLatLng().equals(latlang));
     if (mark?.openPopup) mark?.openPopup();
@@ -95,8 +99,8 @@ export class KryMap {
 
       const line = polyline(points, {
         color: 'var(--primary-color-up)',
-        weight: 3,
-        opacity: 1,
+        weight: 1,
+        opacity: 0.4,
         smoothFactor: 1,
       });
 
@@ -106,6 +110,16 @@ export class KryMap {
 
   @Watch('points')
   markPoints() {
+    if (!this.track && this.points.length == 1) {
+      const mark = this.markes.find(mark =>
+        mark.getLatLng().equals(this.points[0].latlng)
+      );
+
+      mark.setLatLng(this.points[0].latlng);
+
+      return;
+    }
+
     this.markes.forEach(mark => this.view.removeLayer(mark));
 
     const mouseEnterPopup = (el: LeafletMouseEvent) => {
@@ -115,7 +129,7 @@ export class KryMap {
 
     if (this.markHome) {
       const markHome = marker([this.latitude, this.longitude], {
-        icon: this.getPointIcon(this.homeIcon),
+        icon: this.getPointIcon(true, this.homeIcon),
         opacity: 0.9,
       })
         .addTo(this.view)
@@ -127,7 +141,7 @@ export class KryMap {
 
     this.points.forEach(({ latlng, icon, label, key, size }) => {
       const point = marker(latlng, {
-        icon: this.getPointIcon(icon, size),
+        icon: this.getPointIcon(false, icon, size),
       })
         .addTo(this.view)
         .on('click', () => this.kryClickMarkMap.emit(key))
@@ -172,7 +186,14 @@ export class KryMap {
   }
 
   onFullScreen = () => {
-    this.fullscreen = !this.fullscreen;
+    if (!document.fullscreenElement) {
+      this.fullscreen = true;
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      this.fullscreen = false;
+      document.exitFullscreen();
+    }
+
     this.view.invalidateSize();
     if (this.fullscreen) this.view.setZoom(4);
   };

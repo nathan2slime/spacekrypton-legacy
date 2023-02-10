@@ -12,6 +12,7 @@ export const en: AppI18n = {
     notAuthorized: 'Not authorized',
     unableSearchSatellites: 'Unable to search for satellites',
     noSatellitesFound: 'No satellites found',
+    timeoutError: 'Timeout, try again',
     unableTrackSatellite: 'Unable to track this satellite',
   },
   web: {
@@ -29,6 +30,8 @@ export const en: AppI18n = {
       profile: 'Profile',
       satellites: 'Satellites',
     },
+    yes: 'Yes',
+    no: 'No',
     satellites: {
       altitude: 'Altitude',
       azimuth: 'Azimuth',
@@ -37,6 +40,10 @@ export const en: AppI18n = {
       inclination: 'Inclination',
       you: 'You',
       toggleView: 'Choose interaction mode',
+      declination: 'Declination',
+      rightAscension: 'Right Ascension',
+      elevation: 'Elevation',
+      timestamp: 'Timestamp',
       longitude: 'Longitude',
       name: 'Name',
       period: 'Period',

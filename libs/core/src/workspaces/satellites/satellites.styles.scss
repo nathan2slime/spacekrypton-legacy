@@ -162,16 +162,15 @@
       @media (min-width: 376px) {
         grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
       }
+
+      @media (max-width: 970px) {
+        padding-bottom: 120px;
+      }
     }
 
     &.loading {
       overflow: hidden;
     }
-  }
-
-  kry-alert {
-    --alert-padding: 15px;
-    height: fit-content;
   }
 
   div:nth-child(2) {
