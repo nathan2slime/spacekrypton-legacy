@@ -60,7 +60,7 @@ const graphql = async <F, T extends {}>({
       return res;
     })
     .catch(err => {
-      console.log(err);
+      console.log(err.status);
       notify &&
         dispatchCustomEvent<KryAlert>('setAppAlert', document, {
           title: err.message,
