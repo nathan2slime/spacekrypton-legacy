@@ -14,8 +14,6 @@ import { AppState } from '@/store';
 
 import GlobalStyle, { Fonts } from '@/global';
 
-import background from '../assets/images/auth_background.png';
-
 import 'remixicon/fonts/remixicon.css';
 
 const pages = ['login', 'signup'];
@@ -45,8 +43,8 @@ const App: FC<AppProps> = ({ Component, ...props }) => {
           user={user}
           hide={hide}
           alert={state.alert}
-          background={background.src}
           language={state.lang}
+          pathname={pathname}
           logged={logged}
           onKryAlert={e => dispatch(setAlertAction({ ...state.alert, ...e.detail }))}
           onKryRedirect={e => push(e.detail)}

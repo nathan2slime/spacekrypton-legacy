@@ -10,18 +10,19 @@ export class KrySidebarItem {
   @Prop() route: string;
   @Prop() active: boolean;
   @Prop() icon: string;
+  @Prop() open: boolean;
 
   render() {
     return (
       <Host>
-        <div class={{ wrapper: true, active: this.active }}>
+        <div class={{ wrapper: true, active: this.active, close: !this.open }}>
           {this.active ? (
             <kry-icon name={this.icon + 'fill'} />
           ) : (
             <kry-icon name={this.icon + 'line'} />
           )}
 
-          {this.name}
+          {this.open && this.name}
         </div>
       </Host>
     );

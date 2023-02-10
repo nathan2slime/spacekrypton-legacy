@@ -31,6 +31,8 @@ export type WebI18n = {
     period: string;
     eccentricity: string;
     inclination: string;
+    you: string;
+    toggleView: string;
     offline: string;
     azimuth: string;
     eclipsed: string;

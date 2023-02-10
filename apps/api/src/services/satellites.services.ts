@@ -105,7 +105,7 @@ export class SatellitesServices {
     if (member.length == 0) throw getErrorMessage(114, lang);
 
     const res = await Promise.all(
-      member.map(async sat => {
+      member.slice(0, 8).map(async sat => {
         return await this.positions(
           {
             altitude,

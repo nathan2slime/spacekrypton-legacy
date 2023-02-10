@@ -51,5 +51,12 @@
       font-weight: 400;
       font-size: 1.5rem;
     }
+
+    &.close {
+      display: flex;
+      place-items: center;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

@@ -1,16 +1,6 @@
 import { langs } from '@kry/i18n';
 import { AppI18nLang } from '@kry/i18n';
-import {
-  Component,
-  Host,
-  h,
-  Prop,
-  State,
-  Event,
-  EventEmitter,
-  Watch,
-  Listen,
-} from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'kry-logout',
@@ -23,41 +13,16 @@ export class KryLogout {
   @Prop() username: string;
   @Prop() language: AppI18nLang;
 
-  @State() open: boolean;
-  @State() dialog: boolean;
+  @Prop() open: boolean;
 
-  @Event({ bubbles: false }) kryLogoutApp: EventEmitter<boolean>;
+  @Event({ bubbles: false }) kryDialogLogout: EventEmitter<boolean>;
   @Event({ composed: false }) kryRedirect: EventEmitter<string>;
-  @Event({ composed: false }) kryCloseDrawer: EventEmitter<boolean>;
-
-  elDialog: HTMLKryDialogElement;
-
-  toggleOpen = (open?: boolean) => (this.open = open ?? !this.open);
+  @Event({ composed: false }) kryToggleDropdown: EventEmitter<boolean>;
 
   onRedirect = (value: string) => {
-    this.toggleOpen(false);
+    this.kryToggleDropdown.emit(false);
     this.kryRedirect.emit(value);
   };
-
-  @Listen('kryLogout', { target: 'document' })
-  listenLogoutApp() {
-    this.kryLogoutApp.emit(true);
-  }
-
-  @Watch('dialog')
-  listenDialog() {
-    if (!this.elDialog) {
-      this.elDialog = document.createElement('kry-dialog-logout');
-      document.body.appendChild(this.elDialog);
-
-      this.elDialog.addEventListener('kryClose', () => (this.dialog = false));
-      this.elDialog.addEventListener('kryConfirm', () => this.kryLogoutApp.emit(true));
-    }
-
-    this.kryCloseDrawer.emit(true);
-    this.toggleOpen(false);
-    this.elDialog.open = this.dialog;
-  }
 
   render() {
     const styles = {
@@ -72,7 +37,7 @@ export class KryLogout {
           <kry-dropdown
             dropdown="logout"
             open={this.open}
-            onKryClose={() => this.toggleOpen(false)}
+            onKryClose={() => this.kryToggleDropdown.emit(false)}
           >
             <kry-dropdown-item
               hover
@@ -86,7 +51,7 @@ export class KryLogout {
               name={langs[this.language].web.sidebar.logout}
               icon="ri-logout-circle-"
               kry-dialog
-              onClick={() => (this.dialog = true)}
+              onClick={() => this.kryDialogLogout.emit(true)}
             />
           </kry-dropdown>
 
@@ -98,7 +63,7 @@ export class KryLogout {
 
           <div>
             <kry-icon
-              onClick={() => this.toggleOpen()}
+              onClick={() => this.kryToggleDropdown.emit(true)}
               kry-dropdown="logout"
               name="ri-more-2-fill"
             />

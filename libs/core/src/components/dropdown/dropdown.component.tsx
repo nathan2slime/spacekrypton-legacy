@@ -7,6 +7,7 @@ import {
   Element,
   Event,
   EventEmitter,
+  Watch,
 } from '@stencil/core';
 
 @Component({
@@ -16,11 +17,45 @@ import {
 })
 export class KryDropdown {
   @Prop() open: boolean;
+  @Prop() top: number = 0;
+  @Prop() left: number = 0;
   @Prop() dropdown: string;
 
   @Element() host: HTMLKryDropdownElement;
 
   @Event({ composed: false }) kryClose: EventEmitter<boolean>;
+
+  rect: DOMRect;
+  slot: HTMLSlotElement;
+
+  @Watch('open')
+  listenOpen() {
+    if (!this.slot) {
+      this.slot = document.createElement('slot');
+
+      this.host.shadowRoot.appendChild(this.slot);
+    }
+
+    if (this.rect) {
+      const clientHeight = document.documentElement.clientHeight;
+      const clientWidth = document.documentElement.clientWidth;
+
+      const isValidLeft = clientWidth - this.rect.right < this.host.scrollWidth;
+      const isValidTop = clientHeight - this.rect.top < this.host.scrollHeight;
+
+      if (isValidTop) {
+        this.host.style.bottom = clientHeight + this.top - this.rect.top + 'px';
+      } else {
+        this.host.style.top = this.rect.top + this.top + 'px';
+      }
+
+      if (isValidLeft) {
+        this.host.style.right = clientWidth + this.left - this.rect.left + 'px';
+      } else {
+        this.host.style.left = this.left + this.rect.left + 'px';
+      }
+    }
+  }
 
   @Listen('click', { target: 'window' })
   listenClick(e: any) {
@@ -38,32 +73,15 @@ export class KryDropdown {
         return;
       }
 
-      const rect = trigger.getBoundingClientRect();
-      const clientHeight = document.documentElement.clientHeight;
-      const clientWidth = document.documentElement.clientWidth;
-
-      const isValidLeft = clientWidth - rect.right < this.host.scrollWidth;
-      const isValidTop = clientHeight - rect.top < this.host.scrollHeight;
-
-      if (isValidTop) {
-        this.host.style.bottom = clientHeight - rect.top + 'px';
-      } else {
-        this.host.style.top = rect.top + 'px';
-      }
-
-      if (isValidLeft) {
-        this.host.style.right = clientWidth - rect.left + 'px';
-      } else {
-        this.host.style.left = rect.left + 'px';
-      }
+      this.rect = trigger.getBoundingClientRect();
     }
   }
 
+  disconnectedCallback() {
+    if (this.slot) this.slot.remove();
+  }
+
   render() {
-    return (
-      <Host class={{ open: this.open }}>
-        <slot />
-      </Host>
-    );
+    return <Host class={{ open: this.open }} />;
   }
 }

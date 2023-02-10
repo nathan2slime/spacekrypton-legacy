@@ -26,11 +26,13 @@
 
 ## Events
 
-| Event            | Description | Type                                            |
-| ---------------- | ----------- | ----------------------------------------------- |
-| `kryAuth`        |             | `CustomEvent<boolean>`                          |
-| `kryChangeValue` |             | `CustomEvent<{ value: string; name: string; }>` |
-| `kryRedirect`    |             | `CustomEvent<string>`                           |
+| Event               | Description | Type                   |
+| ------------------- | ----------- | ---------------------- |
+| `kryAuth`           |             | `CustomEvent<boolean>` |
+| `kryChangeEmail`    |             | `CustomEvent<any>`     |
+| `kryChangePassword` |             | `CustomEvent<any>`     |
+| `kryChangeUsername` |             | `CustomEvent<any>`     |
+| `kryRedirect`       |             | `CustomEvent<string>`  |
 
 ## Dependencies
 

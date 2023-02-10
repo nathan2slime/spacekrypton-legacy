@@ -3,6 +3,8 @@
 
   display: block;
 
+  --dropdown-item-color: var(--text-color-down);
+
   .wrapper {
     width: inherit;
     height: 40px;
@@ -22,7 +24,7 @@
       transition: all 0.15s;
       letter-spacing: 0.02rem;
       font-family: var(--primary-font-family);
-      color: var(--text-color-down);
+      color: var(--dropdown-item-color);
     }
 
     &.active {
@@ -30,7 +32,7 @@
 
       kry-icon,
       & {
-        color: var(--primary-color-up);
+        --dropdown-item-color: var(--primary-color-up);
       }
     }
 
@@ -39,7 +41,7 @@
 
       &,
       kry-icon {
-        color: var(--primary-color-down);
+        --dropdown-item-color: var(--primary-color-down);
       }
     }
 

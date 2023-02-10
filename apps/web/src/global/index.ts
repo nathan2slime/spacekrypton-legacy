@@ -22,6 +22,10 @@ export default createGlobalStyle`
   :root {
     ${({ theme }) => parseCssTheme(theme)}
   }
+
+  body {
+    overflow: hidden;
+  }
 `;
 
 export const Fonts = createGlobalStyle`

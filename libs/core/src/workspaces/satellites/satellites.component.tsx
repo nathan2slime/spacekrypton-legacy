@@ -10,11 +10,15 @@ import {
   Prop,
   Watch,
   Element,
-  Listen,
 } from '@stencil/core';
 
 import { KryMapPoint } from '../../components/map/map.model';
-import { Satellite, FavoriteSatelliteDetail, FilterSatellites } from './satellites.model';
+import {
+  Satellite,
+  FavoriteSatelliteDetail,
+  FilterSatellites,
+  GlobalCoords,
+} from './satellites.model';
 
 @Component({
   tag: 'kry-satellites',
@@ -28,9 +32,14 @@ export class KrySatellites {
   @Prop() filter: FilterSatellites[] = [];
   @Prop() language: AppI18nLang;
   @Prop() pathname: string;
-  @Prop() type: '2D' | '3D' = '3D';
   @Prop() search: string;
+  @Prop() viewMapIcon: string;
+  @Prop() view3dIcon: string;
+  @Prop() view3dlabel: string;
+  @Prop() viewMapLabel: string;
   @Prop() currentFilter: FilterSatellites;
+  @Prop() type: '2D' | '3D' = '3D';
+  @Prop() loading3D: boolean;
 
   @Event({ composed: false }) kryLocation: EventEmitter<false | GeolocationPosition>;
   @Event({ composed: false }) kryFallback: EventEmitter<boolean>;
@@ -41,12 +50,12 @@ export class KrySatellites {
   @Event({ composed: false })
   kryFavoriteSatellite: EventEmitter<FavoriteSatelliteDetail>;
   @Event({ composed: false }) kryTrackSatellite: EventEmitter<number>;
+  @Event({ composed: false }) kryToggleLoading3D: EventEmitter<boolean>;
 
   @State() location: GeolocationPosition;
   @State() points: KryMapPoint[] = [];
   @State() dialog: boolean;
-  @State() loaded: boolean;
-  @State() loading3D: boolean;
+  @State() globalCoords: GlobalCoords[] = [];
 
   @Element() host: HTMLKrySatellitesElement;
 
@@ -63,19 +72,26 @@ export class KrySatellites {
     }
   }
 
-  @Listen('pathname')
-  listenRouteChange() {
-    this.dialog = false;
+  @Watch('type')
+  listenTypeView() {
+    if (this.type == '3D') {
+      this.earth = document.createElement('earth-satellites-component');
+
+      if (this.earthWrapper) {
+        this.earthWrapper.appendChild(this.earth);
+      }
+
+      this.stopLoading3D();
+    } else {
+      this.map && this.map.resizeMap();
+    }
   }
 
   @Watch('satellites')
   renderPoints() {
-    this.loading3D = false;
-    if (this.earth) this.earthWrapper.removeChild(this.earth);
+    if (this.earth) this.earth.remove();
 
     if (this.satellites) {
-      this.loaded = true;
-
       this.points = this.satellites.map(satellite => {
         const { latitude: satlatitude, longitude: satlongitude } = satellite.positions[0];
 
@@ -87,15 +103,7 @@ export class KrySatellites {
         };
       });
 
-      if (this.type == '3D') {
-        this.loading3D = true;
-        this.earth = document.createElement('earth-satellites-component');
-        this.earthWrapper.appendChild(this.earth);
-
-        this.earth.coordinates = this.getGlobalCoords();
-
-        this.stopLoading3D();
-      }
+      this.globalCoords = this.getGlobalCoords();
     }
   }
 
@@ -128,9 +136,7 @@ export class KrySatellites {
           this.location = el;
           this.kryLocation.emit(el);
         },
-        () => {
-          this.dialog = true;
-        }
+        () => (this.dialog = true)
       );
     } else {
       this.dialog = true;
@@ -138,7 +144,7 @@ export class KrySatellites {
   };
 
   stopLoading3D = () => {
-    setTimeout(() => (this.loading3D = false), 3000);
+    setTimeout(() => this.kryToggleLoading3D.emit(false), 3000);
   };
 
   onFilter = (e: string) => {
@@ -169,6 +175,10 @@ export class KrySatellites {
     this.getLocation();
   }
 
+  disconnectedCallback() {
+    if (this.elDialog) this.elDialog.remove();
+  }
+
   render() {
     const isLoading = this.dialog ? false : !this.loading ? !this.location : this.loading;
 
@@ -180,6 +190,7 @@ export class KrySatellites {
           {this.type == '2D' && (
             <kry-map
               ref={el => (this.map = el)}
+              labelHome={i18n.web.satellites.you}
               latitude={this.location?.coords.latitude}
               onKryClickMarkMap={e => this.kryTrackSatellite.emit(e.detail)}
               longitude={this.location?.coords.longitude}
@@ -197,6 +208,12 @@ export class KrySatellites {
                 <slot name="3d" />
                 {i18n.web.satellites.loading3d}
               </div>
+            </div>
+          )}
+
+          {!this.type && (
+            <div class="earth">
+              <slot name="toggle" />
             </div>
           )}
 
@@ -260,7 +277,7 @@ export class KrySatellites {
           </div>
         </div>
 
-        {isLoading && <slot name="loading" />}
+        <slot name="loading" />
       </Host>
     );
   }

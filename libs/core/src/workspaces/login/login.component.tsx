@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { KryField } from '../../utils/types';
 
 @Component({
   tag: 'kry-login',
@@ -27,7 +26,9 @@ export class KryLogin {
   @Prop() redirect: string;
 
   @Event() kryRedirect: EventEmitter<string>;
-  @Event() kryChangeValue: EventEmitter<KryField>;
+  @Event() kryChangeEmail: EventEmitter;
+  @Event() kryChangePassword: EventEmitter;
+  @Event() kryChangeUsername: EventEmitter;
   @Event() kryAuth: EventEmitter<boolean>;
 
   render() {
@@ -47,9 +48,7 @@ export class KryLogin {
                   label={this.labelUsername}
                   invalid={!!this.usernameMessage}
                   message={this.usernameMessage}
-                  onKryChangeValue={e =>
-                    this.kryChangeValue.emit({ value: e.detail, name: 'username' })
-                  }
+                  onKryChangeValue={e => this.kryChangeUsername.emit(e.detail)}
                 />
               )}
 
@@ -57,9 +56,7 @@ export class KryLogin {
                 label={this.labelEmail}
                 invalid={!!this.emailMessage}
                 message={this.emailMessage}
-                onKryChangeValue={e =>
-                  this.kryChangeValue.emit({ value: e.detail, name: 'email' })
-                }
+                onKryChangeValue={e => this.kryChangeEmail.emit(e.detail)}
               />
 
               <kry-input
@@ -67,9 +64,7 @@ export class KryLogin {
                 type="password"
                 invalid={!!this.passwordMessage}
                 message={this.passwordMessage}
-                onKryChangeValue={e =>
-                  this.kryChangeValue.emit({ value: e.detail, name: 'password' })
-                }
+                onKryChangeValue={e => this.kryChangePassword.emit(e.detail)}
                 onKeyDown={({ code }) => code == 'Enter' && this.kryAuth.emit(true)}
               />
 

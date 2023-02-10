@@ -21,8 +21,8 @@
 
 ### Used by
 
-- [kry-logout](../logout)
 - [kry-news](../../workspaces/news)
+- [kry-sidebar](../sidebar)
 
 ### Depends on
 
@@ -37,8 +37,8 @@ graph TD;
   kry-dialog-logout --> kry-dialog
   kry-dialog-logout --> kry-icon
   kry-dialog-logout --> kry-button
-  kry-logout --> kry-dialog-logout
   kry-news --> kry-dialog-logout
+  kry-sidebar --> kry-dialog-logout
   style kry-dialog-logout fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

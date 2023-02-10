@@ -118,6 +118,10 @@ export const KryThumbNews = /*@__PURE__*/ createReactComponent<
   JSX.KryThumbNews,
   HTMLKryThumbNewsElement
 >('kry-thumb-news');
+export const KryToggleEarth = /*@__PURE__*/ createReactComponent<
+  JSX.KryToggleEarth,
+  HTMLKryToggleEarthElement
+>('kry-toggle-earth');
 export const KryTrack = /*@__PURE__*/ createReactComponent<
   JSX.KryTrack,
   HTMLKryTrackElement

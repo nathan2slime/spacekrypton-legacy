@@ -9,6 +9,7 @@
 | `altitude`   | `altitude`    |             | `number`        | `undefined`                       |
 | `controls`   | `controls`    |             | `boolean`       | `true`                            |
 | `homeIcon`   | `home-icon`   |             | `string`        | `'ri-map-pin-user-fill'`          |
+| `labelHome`  | `label-home`  |             | `string`        | `''`                              |
 | `latitude`   | `latitude`    |             | `number`        | `undefined`                       |
 | `layer`      | `layer`       |             | `string`        | `layer`                           |
 | `lines`      | --            |             | `KryMapPoint[]` | `[]`                              |
@@ -30,6 +31,12 @@
 ## Methods
 
 ### `onFly(latlang: [number, number], zoom?: number) => Promise<void>`
+
+#### Returns
+
+Type: `Promise<void>`
+
+### `resizeMap() => Promise<void>`
 
 #### Returns
 

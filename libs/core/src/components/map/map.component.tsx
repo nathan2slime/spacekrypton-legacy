@@ -40,6 +40,7 @@ export class KryMap {
   @Prop() unknowIcon: string = 'ri-checkbox-blank-circle-fill';
   @Prop() homeIcon: string = 'ri-map-pin-user-fill';
   @Prop() maxZoom: number = 8;
+  @Prop() labelHome: string = '';
   @Prop() zoom: number = 3;
   @Prop() points: KryMapPoint[] = [];
   @Prop() lines: KryMapPoint[] = [];
@@ -82,6 +83,11 @@ export class KryMap {
     if (mark?.openPopup) mark?.openPopup();
   }
 
+  @Method()
+  async resizeMap() {
+    this.view.invalidateSize();
+  }
+
   @Watch('lines')
   traceLine() {
     if (this.trace) {
@@ -113,7 +119,7 @@ export class KryMap {
         opacity: 0.9,
       })
         .addTo(this.view)
-        .bindPopup('YOU', this.tooltipConfig)
+        .bindPopup(this.labelHome.toUpperCase(), this.tooltipConfig)
         .on('mousemove', el => mouseEnterPopup(el));
 
       this.markes.push(markHome);
@@ -161,11 +167,13 @@ export class KryMap {
       debounceMoveend: false,
       pan: false,
     });
+
+    this.markPoints();
   }
 
   onFullScreen = () => {
     this.fullscreen = !this.fullscreen;
-
+    this.view.invalidateSize();
     if (this.fullscreen) this.view.setZoom(4);
   };
 

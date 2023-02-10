@@ -18,6 +18,7 @@
 
 - [kry-card-news](../card-news)
 - [kry-logout](../../composites/logout)
+- [kry-sidebar](../../composites/sidebar)
 
 ### Depends on
 
@@ -30,6 +31,7 @@ graph TD;
   kry-dropdown-item --> kry-icon
   kry-card-news --> kry-dropdown-item
   kry-logout --> kry-dropdown-item
+  kry-sidebar --> kry-dropdown-item
   style kry-dropdown-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -46,3 +46,12 @@ export type FilterSatellite = {
   icon: string;
   key: string;
 };
+
+export type SatellitesView = '2D' | '3D';
+
+export type SatelliteState = {
+  data: Satellite[];
+  location?: UserLocation;
+  view?: SatellitesView;
+  loading3d: boolean;
+};

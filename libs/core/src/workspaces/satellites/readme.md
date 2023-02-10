@@ -4,17 +4,22 @@
 
 ## Properties
 
-| Property        | Attribute  | Description | Type                                            | Default     |
-| --------------- | ---------- | ----------- | ----------------------------------------------- | ----------- |
-| `currentFilter` | --         |             | `{ title: string; key: string; icon: string; }` | `undefined` |
-| `favorites`     | --         |             | `number[]`                                      | `[]`        |
-| `filter`        | --         |             | `FilterSatellites[]`                            | `[]`        |
-| `language`      | `language` |             | `"en" \| "pt-BR"`                               | `undefined` |
-| `loading`       | `loading`  |             | `boolean`                                       | `undefined` |
-| `pathname`      | `pathname` |             | `string`                                        | `undefined` |
-| `satellites`    | --         |             | `Satellite[]`                                   | `[]`        |
-| `search`        | `search`   |             | `string`                                        | `undefined` |
-| `type`          | `type`     |             | `"2D" \| "3D"`                                  | `'3D'`      |
+| Property        | Attribute        | Description | Type                                            | Default     |
+| --------------- | ---------------- | ----------- | ----------------------------------------------- | ----------- |
+| `currentFilter` | --               |             | `{ title: string; key: string; icon: string; }` | `undefined` |
+| `favorites`     | --               |             | `number[]`                                      | `[]`        |
+| `filter`        | --               |             | `FilterSatellites[]`                            | `[]`        |
+| `language`      | `language`       |             | `"en" \| "pt-BR"`                               | `undefined` |
+| `loading`       | `loading`        |             | `boolean`                                       | `undefined` |
+| `loading3D`     | `loading-3-d`    |             | `boolean`                                       | `undefined` |
+| `pathname`      | `pathname`       |             | `string`                                        | `undefined` |
+| `satellites`    | --               |             | `Satellite[]`                                   | `[]`        |
+| `search`        | `search`         |             | `string`                                        | `undefined` |
+| `type`          | `type`           |             | `"2D" \| "3D"`                                  | `'3D'`      |
+| `view3dIcon`    | `view-3d-icon`   |             | `string`                                        | `undefined` |
+| `view3dlabel`   | `view-3dlabel`   |             | `string`                                        | `undefined` |
+| `viewMapIcon`   | `view-map-icon`  |             | `string`                                        | `undefined` |
+| `viewMapLabel`  | `view-map-label` |             | `string`                                        | `undefined` |
 
 ## Events
 
@@ -27,6 +32,7 @@
 | `kryLocation`          |             | `CustomEvent<GeolocationPosition \| boolean>`                |
 | `kryRedirect`          |             | `CustomEvent<string>`                                        |
 | `krySearch`            |             | `CustomEvent<boolean>`                                       |
+| `kryToggleLoading3D`   |             | `CustomEvent<boolean>`                                       |
 | `kryTrackSatellite`    |             | `CustomEvent<number>`                                        |
 
 ## Dependencies
