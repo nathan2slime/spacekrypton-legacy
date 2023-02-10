@@ -7,6 +7,7 @@ import {
   TypedDocumentNode,
 } from '@apollo/client';
 import { KryAlert } from '@kry/core/dist/types/utils/types';
+import { AppI18nLang, langs } from '@kry/i18n';
 
 export const client = new ApolloClient({
   uri: '/api/graphql',
@@ -69,7 +70,8 @@ const graphql = async <F, T extends {}>({
 
     return { data, errors };
   } catch (error) {
-    sendMessage('deu algum erro na api');
+    const lang = getLocalStorageItem(envs.localStorageKeys.lang);
+    sendMessage(langs[lang as AppI18nLang].err.timeoutError);
 
     return { data: null, errors: error };
   }
