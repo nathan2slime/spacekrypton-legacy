@@ -18,6 +18,7 @@
 
 ### Used by
 
+- [kry-app](../../workspaces/app)
 - [kry-card-news](../card-news)
 - [kry-card-satellite](../card-satellite)
 - [kry-create-news](../../workspaces/create-news)
@@ -41,6 +42,7 @@
 
 ```mermaid
 graph TD;
+  kry-app --> kry-icon
   kry-card-news --> kry-icon
   kry-card-satellite --> kry-icon
   kry-create-news --> kry-icon

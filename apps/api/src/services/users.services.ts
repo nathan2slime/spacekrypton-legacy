@@ -29,7 +29,7 @@ export class UserServices {
   async login(data: LoginInput, lang: AppI18nLang): Promise<AuthUser> {
     log.start('user authentication with email', data.email);
 
-    const error = getErrorMessage(721, lang);
+    const error = getErrorMessage(725, lang);
     const user = await this.getByEmail(data.email);
 
     if (!user) throw error;

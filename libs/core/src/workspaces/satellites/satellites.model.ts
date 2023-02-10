@@ -32,6 +32,8 @@ export type GlobalSatellite = {
 };
 
 export type GlobalCoords = {
-  lat: number;
-  long: number;
+  coords: {
+    lat: number;
+    long: number;
+  }[];
 };

@@ -36,6 +36,8 @@ const Login: NextPage = () => {
   const [isLoading, setLoading] = useState(false);
   const { lang } = useSelector((state: AppState) => state);
 
+  const i18n = langs[lang].web;
+
   const {
     register,
     setValue,
@@ -77,22 +79,21 @@ const Login: NextPage = () => {
   return (
     <KryLogin
       type="login"
-      action={langs[lang].web.sidebar.login}
-      redirect={langs[lang].web.sidebar.signup}
+      action={i18n.sidebar.login.toUpperCase()}
+      redirect={i18n.sidebar.signup}
       icon="/logo.png"
       background={background.src}
-      footer={langs[lang].web.auth.noHaveAccount}
+      footer={i18n.auth.noHaveAccount}
       email={form.email}
       password={form.password}
       isInvalid={!isValid}
       isLoading={isLoading}
-      labelEmail={langs[lang].web.form.email}
-      labelPassword={langs[lang].web.form.password}
+      labelEmail={i18n.form.email}
+      labelPassword={i18n.form.password}
       passwordMessage={appErrors.getMessage('password', errors)}
       emailMessage={appErrors.getMessage('email', errors)}
-      onKryChangeValue={e =>
-        setValue(e.detail.name, e.detail.value, { shouldValidate: true })
-      }
+      onKryChangeEmail={e => setValue('email', e.detail, { shouldValidate: true })}
+      onKryChangePassword={e => setValue('password', e.detail, { shouldValidate: true })}
       onKryAuth={onLogin}
       onKryRedirect={e => router.push(e.detail ?? '/auth/signup')}
     >

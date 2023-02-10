@@ -9,6 +9,7 @@
 | `active` | `active`  |             | `boolean` | `undefined` |
 | `icon`   | `icon`    |             | `string`  | `undefined` |
 | `name`   | `name`    |             | `string`  | `undefined` |
+| `open`   | `open`    |             | `boolean` | `undefined` |
 | `route`  | `route`   |             | `string`  | `undefined` |
 
 ## Dependencies

@@ -38,6 +38,8 @@ const Signup: NextPage = () => {
 
   const { lang } = useSelector((state: AppState) => state);
 
+  const i18n = langs[lang].web;
+
   const {
     register,
     setValue,
@@ -79,25 +81,25 @@ const Signup: NextPage = () => {
   return (
     <KryLogin
       type="signup"
-      action={langs[lang].web.sidebar.signup}
-      redirect={langs[lang].web.sidebar.login}
+      action={i18n.sidebar.signup}
+      redirect={i18n.sidebar.login}
       icon="/logo.png"
       background={background.src}
-      footer={langs[lang].web.auth.alreadyHaveAccount}
+      footer={i18n.auth.alreadyHaveAccount}
       email={form.email}
       password={form.password}
       username={form.username}
       isLoading={isLoading}
-      labelEmail={langs[lang].web.form.email}
-      labelPassword={langs[lang].web.form.password}
-      labelUsername={langs[lang].web.form.username}
+      labelEmail={i18n.form.email}
+      labelPassword={i18n.form.password}
+      labelUsername={i18n.form.username}
       isInvalid={!isValid}
       passwordMessage={appErrors.getMessage('password', errors)}
       usernameMessage={appErrors.getMessage('username', errors)}
       emailMessage={appErrors.getMessage('email', errors)}
-      onKryChangeValue={e =>
-        setValue(e.detail.name, e.detail.value, { shouldValidate: true })
-      }
+      onKryChangeEmail={e => setValue('email', e.detail, { shouldValidate: true })}
+      onKryChangePassword={e => setValue('password', e.detail, { shouldValidate: true })}
+      onKryChangeUsername={e => setValue('username', e.detail, { shouldValidate: true })}
       onKryAuth={onSignup}
       onKryRedirect={e => router.push(e.detail ?? '/auth/login')}
     >

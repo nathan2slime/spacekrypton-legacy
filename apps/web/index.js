@@ -19,7 +19,11 @@ app.prepare().then(() => {
       const parsedUrl = parse(req.url, true);
       const { pathname, query } = parsedUrl;
 
-      if (pathname.startsWith('/_next') || pathname.startsWith('/__next')) {
+      if (
+        pathname.startsWith('/_next') ||
+        pathname.includes('/api') ||
+        pathname.startsWith('/__next')
+      ) {
         await handle(req, res, parsedUrl);
       } else if (pathname.includes('.')) {
         const filePath = path.join(__dirname + '/public', pathname);

@@ -35,6 +35,8 @@ export const en: AppI18n = {
       latitude: 'Latitude',
       eclipsed: 'Eclipsed',
       inclination: 'Inclination',
+      you: 'You',
+      toggleView: 'Choose interaction mode',
       longitude: 'Longitude',
       name: 'Name',
       period: 'Period',

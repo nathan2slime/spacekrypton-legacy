@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { KryLoading, KrySatellites } from '@kry/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { KryLoading, KrySatellites, KryToggleEarth } from '@kry/react';
 import { BallTriangle, MutatingDots } from 'react-loader-spinner';
 import { useRouter } from 'next/router';
 import { themes } from '@kry/themes';
@@ -12,29 +13,36 @@ import {
   getAltitudeService,
   searchSatellitesService,
 } from '@/services/satellites.services';
-import { Satellite } from '@kry/api/src/graphql/schemas/satellites.schemas';
 import {
   FilterSatellite,
   SatelliteOrder,
   SatelliteSort,
   UserLocation,
 } from '@/types/satellites.types';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '@/store';
 import { setAlertAction } from '@/store/actions/alert.actions';
 import { langs } from '@kry/i18n';
+import {
+  setLoading3DSatellitesViewAction,
+  setSatellitesAction,
+  setSatellitesViewAction,
+  setUserLocationAction,
+} from '@/store/actions/satellites.actions';
+
+import background from '@/assets/images/auth_background.png';
 
 const Satellites: NextPage<any> = () => {
   const { push, pathname } = useRouter();
   const dispatch = useDispatch();
-  const { lang } = useSelector((state: AppState) => state);
+  const {
+    lang,
+    satellites: { data: satellites, location, loading3d, view },
+  } = useSelector((state: AppState) => state);
 
   const [search, setSearch] = useState('');
-  const [location, setLocation] = useState<UserLocation>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [messageLoading, setMessageLoading] = useState('');
   const [currentFilter, setCurrentFilter] = useState<FilterSatellite>();
-  const [satellites, setSatellites] = useState<Satellite[]>([]);
 
   const i18n = langs[lang].web.satellites;
   const filter: FilterSatellite[] = [
@@ -61,7 +69,9 @@ const Satellites: NextPage<any> = () => {
   ];
 
   const onGetAltitude = async (e: GeolocationPosition | false) => {
-    if (e) {
+    const initial = e && !location && satellites.length == 0;
+
+    if (initial) {
       setLoading(true);
 
       const { latitude, longitude } = e.coords;
@@ -86,7 +96,7 @@ const Satellites: NextPage<any> = () => {
   };
 
   const onSearchSatellites = async ({ altitude, longitude, latitude }: UserLocation) => {
-    setLocation({ altitude, longitude, latitude });
+    dispatch(setUserLocationAction({ altitude, longitude, latitude }));
 
     const payload = {
       latitude,
@@ -94,7 +104,7 @@ const Satellites: NextPage<any> = () => {
       altitude,
       search,
       order: 'DESC' as SatelliteOrder,
-      sort: currentFilter?.key.toLocaleUpperCase() as SatelliteSort,
+      sort: (currentFilter || filter[0]).key.toLocaleUpperCase() as SatelliteSort,
     };
 
     setMessageLoading(i18n.tracking);
@@ -104,7 +114,8 @@ const Satellites: NextPage<any> = () => {
     setLoading(false);
 
     if (data) {
-      setSatellites(data.SearchSatellite);
+      dispatch(setSatellitesAction(data.SearchSatellite));
+      dispatch(setLoading3DSatellitesViewAction(true));
       return data.SearchSatellite;
     }
 
@@ -126,7 +137,7 @@ const Satellites: NextPage<any> = () => {
           })
         );
       } else {
-        setSatellites([]);
+        dispatch(setSatellitesAction([]));
       }
     }
   };
@@ -141,8 +152,9 @@ const Satellites: NextPage<any> = () => {
       filter={filter}
       loading={loading}
       currentFilter={currentFilter}
+      type={view}
+      loading3D={loading3d}
       satellites={satellites}
-      type="3D"
       search={search}
       favorites={[]}
       language={lang}
@@ -151,6 +163,7 @@ const Satellites: NextPage<any> = () => {
       onKryLocation={e => onGetAltitude(e.detail)}
       onKryFilter={e => setCurrentFilter(e.detail)}
       onKrySearch={() => onStartSearch()}
+      onKryToggleLoading3D={e => dispatch(setLoading3DSatellitesViewAction(e.detail))}
       onKryFallback={() => push('/')}
       onKryTrackSatellite={e => push('/satellites/' + e.detail)}
     >
@@ -158,14 +171,16 @@ const Satellites: NextPage<any> = () => {
         <title>{langs[lang].web.satellites.title} | Space Krypton</title>
       </Head>
 
-      <KryLoading slot="loading" message={messageLoading}>
-        <BallTriangle
-          height="40px"
-          visible
-          width="40px"
-          color={themes.dark.loadingColorUp}
-        />
-      </KryLoading>
+      {loading && (
+        <KryLoading slot="loading" message={messageLoading}>
+          <BallTriangle
+            height="40px"
+            visible
+            width="40px"
+            color={themes.dark.loadingColorUp}
+          />
+        </KryLoading>
+      )}
 
       <div slot="3d">
         <MutatingDots
@@ -177,6 +192,17 @@ const Satellites: NextPage<any> = () => {
           visible
         />
       </div>
+
+      <KryToggleEarth
+        slot="toggle"
+        view3dIcon="/assets/icons/earth.svg"
+        viewMapIcon="/assets/icons/map.svg"
+        viewMapLabel="2D"
+        background={background.src}
+        view3dlabel="3D"
+        label={i18n.toggleView}
+        onKryToggleViewEarth={e => dispatch(setSatellitesViewAction(e.detail))}
+      />
     </KrySatellites>
   );
 };

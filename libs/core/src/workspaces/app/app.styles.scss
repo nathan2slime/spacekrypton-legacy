@@ -7,13 +7,64 @@
     height: 100dvh;
     background: var(--background-color-down);
 
-    overflow: hidden;
-
     &,
     main {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .sidebar {
+      z-index: 11;
+      position: relative;
+      transition: all 0.15s;
+
+      &,
+      kry-sidebar {
+        width: 100%;
+        max-width: 100px;
+      }
+
+      button {
+        z-index: 12;
+        right: -11px;
+        top: 27px;
+        position: absolute;
+        border-radius: 5px;
+
+        width: 30px;
+        height: 30px;
+        background: var(--foreground-color-up);
+        border: 1px solid var(--foreground-color-up);
+        cursor: pointer;
+
+        kry-icon {
+          font-size: 1rem;
+          transform: rotate(-180deg);
+          color: var(--text-color-down);
+        }
+
+        &,
+        kry-icon {
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          border-color: var(--secondary-color-down);
+        }
+      }
+
+      &.open {
+        &,
+        kry-sidebar {
+          width: 100%;
+          max-width: 280px;
+        }
+
+        button kry-icon {
+          transform: rotate(0deg);
+        }
+      }
     }
 
     main {
@@ -26,7 +77,7 @@
       justify-content: flex-start;
     }
 
-    > kry-sidebar {
+    > .sidebar {
       display: none;
     }
 
@@ -35,16 +86,17 @@
     }
 
     kry-drawer {
-      background: var(--background-color-up);
+      background: var(--foreground-color-up-opac);
 
       kry-sidebar {
         max-width: none;
         width: 100vw;
+        z-index: 14;
       }
     }
 
     @media (min-width: 950px) {
-      kry-sidebar {
+      .sidebar {
         display: block;
       }
 
@@ -66,6 +118,9 @@
 
     display: flex;
     align-items: center;
+    transform: none;
+    right: 20px;
+    bottom: 20px;
 
     &,
     p {
