@@ -33,6 +33,7 @@ export type WebI18n = {
     eccentricity: string;
     inclination: string;
     you: string;
+    singleTracking: string;
     toggleView: string;
     offline: string;
     azimuth: string;

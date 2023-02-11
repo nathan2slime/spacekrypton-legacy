@@ -1,16 +1,20 @@
-import { CreateUserInput, LoginInput } from '@kry/api/src/graphql/schemas/users.schemas';
+import {
+  CreateUserInput,
+  LoginInput,
+  UpdateUserInput,
+} from '@kry/api/src/graphql/schemas/users.schemas';
 
 export type UserType = {
-  id?: string;
-  email?: string;
+  id: string;
+  email: string;
   avatar?: string;
-  created_at?: string;
+  created_at: string;
   updated_at?: string;
   deleted_at?: string;
-  satellites?: number[];
+  satellites: number[];
   thumb?: string;
-  roles?: string[];
-  username?: string;
+  roles: string[];
+  username: string;
 };
 
 export type AuthState = {
@@ -36,10 +40,18 @@ export type AuthReponse<T> = {
   Auth: T;
 };
 
+export type UpdateUserResponse = {
+  UpdateUser?: UserType;
+};
+
 export type CreateUserPayload = {
   user: CreateUserInput;
 };
 
 export type LoginPayload = {
   login: LoginInput;
+};
+
+export type UpdateUserPayload = {
+  user: UpdateUserInput;
 };

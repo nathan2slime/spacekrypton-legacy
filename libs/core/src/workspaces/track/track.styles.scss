@@ -58,11 +58,13 @@
       }
     }
 
-    kry-map {
+    kry-map:not(.fullscreen) {
       height: 100vh;
       height: 100dvh;
+      max-height: 100vh;
+      position: inherit;
 
-      --position-top-controls: 100px;
+      --position-top-controls: 120px;
     }
 
     kry-track-view {
@@ -70,7 +72,7 @@
       width: 100%;
       max-width: 400px;
       position: absolute;
-      z-index: 16;
+      z-index: 20;
       bottom: 10px;
       right: 10px;
       margin: auto;
@@ -85,10 +87,10 @@
         position: static;
       }
 
-      kry-map {
+      kry-map:not(.fullscreen) {
         height: 400px;
 
-        --position-top-controls: 22px;
+        --position-top-controls: 110px;
       }
 
       header {

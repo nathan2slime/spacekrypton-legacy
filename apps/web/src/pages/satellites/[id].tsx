@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { KryLoading, KryTrack } from '@kry/react';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BallTriangle } from 'react-loader-spinner';
+import { langs } from '@kry/i18n';
 import { NextPage } from 'next';
 import { dark } from '@kry/themes';
 import envs from '@kry/envs';
 
-import { AppState } from '../../store';
+import { AppState, useTypedDispatch } from '../../store';
 import { UserLocation } from '@/types/satellites.types';
 import { getLocalStorageItem, setLocalStorageItem } from '@/utils/funcs';
 import { Satellite } from '@kry/api/src/graphql/schemas/satellites.schemas';
@@ -15,26 +16,34 @@ import {
   getAltitudeService,
   trackSatelliteService,
 } from '@/services/satellites.services';
+import { favoriteSatelliteThunk } from '@/store/thunks/auth.thunks';
+import { favoriteSatelliteAction } from '@/store/actions/auth.actions';
 
 const Track: NextPage = () => {
   const [location, setLocation] = useState<UserLocation>();
   const [satellite, setSatellite] = useState<Satellite>();
   const [isReTrack, setIsReTrack] = useState(false);
-  const [id, setID] = useState<number>();
+  const [id, setID] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
-  const [loadingMessage, setLoadingMessage] = useState();
+  const [loadingMessage, setLoadingMessage] = useState<string>();
+
+  const {
+    lang,
+    auth: { user },
+  } = useSelector((state: AppState) => state);
 
   const router = useRouter();
-  const dispatch = useDispatch();
-  const { lang } = useSelector((state: AppState) => state);
+  const dispatch = useTypedDispatch();
+
+  const i18n = langs['en'].web.satellites;
 
   const onGetAltitude = async (e: GeolocationPosition | false) => {
     const id = router.query.id;
     if (e && id) {
       const ID = parseInt(id as string);
 
-      if (!Number.isFinite(ID)) return setLoading(false);
+      if (!Number.isFinite(ID)) return router.push('/');
 
       setID(ID);
 
@@ -72,6 +81,8 @@ const Track: NextPage = () => {
       setSatellite(data.TrackSatellite);
 
       setLoading(false);
+    } else {
+      if (!isReTrack) router.push('/');
     }
   };
 
@@ -82,21 +93,28 @@ const Track: NextPage = () => {
     }
   };
 
-  const onFavoriteSatellite = async (_: any) => {
-    return;
+  const onFavoriteSatellite = async () => {
+    if (user) {
+      id && dispatch(favoriteSatelliteAction(id));
+      dispatch(favoriteSatelliteThunk());
+    } else {
+      router.push('/auth/login');
+    }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setLoadingMessage(i18n.singleTracking);
+  }, []);
 
   return (
     <KryTrack
       satellite={satellite}
       onKryRequestTrack={() => onRequestTrack()}
       onKryLocation={e => onGetAltitude(e.detail)}
-      favorite
+      favorite={user && user.satellites.includes(id)}
       language={lang}
       onKryFallback={() => router.push('/')}
-      onKryFavoriteSatellite={e => onFavoriteSatellite(e)}
+      onKryFavoriteSatellite={() => onFavoriteSatellite()}
       loading={isReTrack ? false : loading}
     >
       <KryLoading message={loadingMessage}>

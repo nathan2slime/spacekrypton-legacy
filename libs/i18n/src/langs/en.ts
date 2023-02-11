@@ -51,6 +51,7 @@ export const en: AppI18n = {
       offline: 'Offline',
       getAltitude: 'Getting your altitude',
       tracking: 'Tracking satellites',
+      singleTracking: 'Tracking satellite',
       searching: 'Looking for satellites',
       track: 'Track',
       results: ' satellites tracked',

@@ -64,15 +64,27 @@ export class CreateUserInput {
   @Field(() => String)
   username: string;
 
-  @Field(() => String, { nullable: true })
-  avatar: string;
-
   @IsEmail()
   @Field(() => String)
   email: string;
 
   @Field(() => String)
   password: string;
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field(() => String, { nullable: true })
+  username?: string;
+
+  @Field(() => String, { nullable: true })
+  avatar?: string;
+
+  @Field(() => String, { nullable: true })
+  thumb?: string;
+
+  @Field(() => [Int], { nullable: true })
+  satellites?: number[];
 }
 
 @InputType()

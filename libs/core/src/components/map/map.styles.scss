@@ -96,8 +96,8 @@
     z-index: 8;
     border-radius: 8px;
     overflow: hidden;
-    top: 30px;
-    right: 30px;
+    top: var(--position-top-controls, 30px);
+    right: var(--position-right-controls, 30px);
 
     div {
       width: 35px;

@@ -20,6 +20,14 @@ export const loginMutation = gql`
   }
 `;
 
+export const favoriteSatelliteMutation = gql`
+  mutation UserUpdate($user: UpdateUserInput!) {
+    UserUpdate(user: $user) {
+      satellites
+    }
+  }
+`;
+
 export const signupMutation = gql`
   mutation SignUp($user: CreateUserInput!) {
     SignUp(user: $user) {

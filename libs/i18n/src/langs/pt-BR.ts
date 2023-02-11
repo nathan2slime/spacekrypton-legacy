@@ -28,6 +28,7 @@ export const ptBR: AppI18n = {
       altitude: 'Altitude',
       azimuth: 'Azimute',
       latitude: 'Latitude',
+      singleTracking: 'Rastreando satélite',
       eclipsed: 'Eclipsado',
       inclination: 'Inclinação',
       longitude: 'Longitude',

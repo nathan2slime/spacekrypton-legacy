@@ -24,7 +24,8 @@ import {
 } from 'leaflet';
 
 import { KryMapPoint } from './map.model';
-import { layer } from './mocks';
+
+import { layers } from './mocks';
 
 @Component({
   tag: 'kry-map',
@@ -32,7 +33,7 @@ import { layer } from './mocks';
   shadow: true,
 })
 export class KryMap {
-  @Prop() layer: string = layer;
+  @Prop() layer: string = layers.dark;
   @Prop() latitude: number;
   @Prop() longitude: number;
   @Prop() altitude?: number;
@@ -109,6 +110,8 @@ export class KryMap {
   }
 
   @Watch('points')
+  @Watch('latitude')
+  @Watch('longitude')
   markPoints() {
     if (!this.track && this.points.length == 1) {
       const mark = this.markes.find(mark =>
@@ -121,13 +124,14 @@ export class KryMap {
     }
 
     this.markes.forEach(mark => this.view.removeLayer(mark));
+    this.markes = [];
 
     const mouseEnterPopup = (el: LeafletMouseEvent) => {
       const hover = this.markes.find(mark => mark.getLatLng().equals(el.latlng));
       if (hover) hover.openPopup();
     };
 
-    if (this.markHome) {
+    if (this.markHome && this.latitude && this.longitude) {
       const markHome = marker([this.latitude, this.longitude], {
         icon: this.getPointIcon(true, this.homeIcon),
         opacity: 0.9,
