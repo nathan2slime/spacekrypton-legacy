@@ -9,7 +9,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { withAppState } from '@/components/guards/state';
 import { setAlertAction } from '@/store/actions/alert.actions';
-import { setAuthAction } from '@/store/actions/auth.actions';
+import { setAuthAction, setUserAction } from '@/store/actions/auth.actions';
 import { AuthProvider } from '@/components/providers/auth';
 import { AppState } from '@/store';
 
@@ -32,10 +32,13 @@ const App: FC<AppProps> = ({ Component, ...props }) => {
   const hide = !pages.find(page => pathname.includes(page));
 
   const onLogout = () => {
-    dispatch(setAuthAction({ user: undefined, token: undefined, logged: false }));
+    dispatch(setAuthAction({ token: undefined, logged: false }));
+    dispatch(setUserAction());
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
+    push('/');
   };
 
   return (

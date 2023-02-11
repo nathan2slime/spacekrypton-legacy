@@ -9,7 +9,6 @@ import {
 } from '../actions/auth.actions';
 
 import avatar from '../../assets/images/avatar.jpg';
-import { string } from 'yup/lib/locale';
 
 const INITIAL: AuthState = {
   logged: false,
@@ -28,14 +27,15 @@ export default createReducer(INITIAL, builder => {
         ...state,
         user: {
           ...payload,
-          avatar: payload.avatar ? payload.avatar : avatar.src,
+          avatar: payload?.avatar ? payload.avatar : avatar.src,
         },
       };
     })
     .addCase<string, AnyAction>(setFavoriteUserSatellitesAction.type, (state, action) => {
       const user = state.user;
 
-      if (user) return { ...state, user: { ...user, satellites: action.payload } };
+      if (user && user.satellites)
+        return { ...state, user: { ...user, satellites: action.payload } };
 
       return state;
     })
@@ -43,7 +43,7 @@ export default createReducer(INITIAL, builder => {
       const user = state.user;
       const newSat = action.payload;
 
-      if (user) {
+      if (user && user.satellites) {
         let satellites = [...user.satellites];
 
         if (satellites) {

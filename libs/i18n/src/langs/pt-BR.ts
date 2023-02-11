@@ -19,6 +19,9 @@ export const ptBR: AppI18n = {
     form: {
       email: 'Email',
       password: 'Senha',
+      required: 'Campo obrigatório',
+      invalidEmail: 'Email inválido',
+      limit: v => `Limite de ${v} caracteres`,
       search: 'Pesquisar',
       username: 'Nome de usuário',
     },
@@ -53,6 +56,7 @@ export const ptBR: AppI18n = {
     sidebar: {
       logout: 'Sair',
       news: 'Notícias',
+      index: 'Home',
       profile: 'Perfil',
       signup: 'Cadastro',
       login: 'Entrar',

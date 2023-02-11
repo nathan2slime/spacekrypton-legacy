@@ -38,7 +38,7 @@ config();
 export default startServerAndCreateNextHandler(server, {
   context: async (req, res) => {
     const lang = (req.headers['content-language'] || 'en') as AppI18nLang;
-    const user = await getUserIDByToken(req.headers.authorization);
+    const user: any = await getUserIDByToken(req.headers.authorization);
 
     return { req, res, user, lang };
   },

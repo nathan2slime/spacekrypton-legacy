@@ -12,3 +12,6 @@ export const dispatchCustomEvent = <T>(
   target: Document | Window = document,
   detail: T
 ) => target.dispatchEvent(new CustomEvent(name, { detail }));
+
+export const getFieldMessage = (field: string, errors: any) =>
+  errors[field]?.message?.toString();

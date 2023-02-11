@@ -42,14 +42,16 @@ export const withGuard: Guard = Component => props => {
     return;
   }, []);
 
-  return authorized ? <Component {...props} /> : <Loading />;
+  return authorized ? <Component {...props.pageProps} /> : <Loading />;
 };
 
 export const withMe: Guard = Component => props => {
   const { push } = useRouter();
   const { logged } = useSelector((state: AppState) => state.auth);
 
-  useEffect(() => !logged && props.me && push('/auth/login'), []);
+  useEffect(() => {
+    if (!logged && props.me) push('/auth/login');
+  }, []);
 
-  return <Component {...props} />;
+  return <Component {...props.pageProps} />;
 };

@@ -8,7 +8,7 @@ import { UserServices } from '../services/users.services';
 import { User } from '../graphql/schemas/users.schemas';
 
 export type AppContext = {
-  user: number;
+  user: string;
   lang: AppI18nLang;
 };
 

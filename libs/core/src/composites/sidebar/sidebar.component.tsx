@@ -58,7 +58,7 @@ export class KrySidebar {
       backgroundImage: `url(${this.background})`,
     };
     const avatarStyles = {
-      backgroundImage: `url(${this.user.avatar})`,
+      backgroundImage: `url(${this.user?.avatar})`,
     };
 
     const i18n = langs[this.language].web.sidebar;
@@ -120,7 +120,10 @@ export class KrySidebar {
                 <kry-dropdown-item
                   hover
                   name={i18n.profile}
-                  onClick={() => this.kryRedirect.emit('/auth/login')}
+                  onClick={() => {
+                    this.kryRedirect.emit('/profile/me');
+                    this.dropdown = false;
+                  }}
                   icon="ri-user-3-"
                 />
 

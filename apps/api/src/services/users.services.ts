@@ -16,7 +16,7 @@ import { gqlModelTransform } from '../utils/transform';
 import { log } from '../log';
 
 export class UserServices {
-  async getById(id: number, lang: AppI18nLang) {
+  async getById(id: string, lang: AppI18nLang) {
     log.start('user search by id', id);
     const [user] = await UserModel.find({ id });
 
@@ -63,7 +63,7 @@ export class UserServices {
     return { user: gqlModelTransform<User>(user), token };
   }
 
-  async update(data: UpdateUserInput, id: number, lang: AppI18nLang) {
+  async update(data: UpdateUserInput, id: string, lang: AppI18nLang) {
     if (!id) throw getErrorMessage(727, lang);
     log.start('updating user with id', id);
 

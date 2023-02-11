@@ -123,6 +123,10 @@
       }
     }
 
+    @media (max-width: 960px) {
+      flex-direction: row;
+    }
+
     @media (min-width: 426px) {
       top: var(--position-top-controls, 22px);
       right: var(--position-right-controls, 22px);

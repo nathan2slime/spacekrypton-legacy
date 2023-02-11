@@ -67,6 +67,7 @@ export class KryMap {
   getPointIcon = (icon: boolean, name?: string, size: number = 1.25) =>
     divIcon({
       popupAnchor: [0, -20],
+      iconAnchor: icon ? [0, 0] : [0, 0],
       html: icon
         ? `<kry-icon style="font-size: ${size}rem" name=${name || this.unknowIcon} />`
         : `<img src="/assets/icons/satellite.svg" />`,

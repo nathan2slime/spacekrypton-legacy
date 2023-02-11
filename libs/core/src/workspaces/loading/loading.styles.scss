@@ -34,16 +34,14 @@
       }
 
       &:last-child {
-        width: 100vw;
         position: absolute;
+        bottom: 20px;
+        right: 20px;
 
-        bottom: 50%;
-        right: 50%;
         word-wrap: break-word;
 
         flex-direction: column;
         gap: 20px;
-        transform: translate(50%, 50%);
 
         span {
           font-size: 0.875rem;
@@ -58,8 +56,6 @@
 
         @media (min-width: 500px) {
           width: fit-content;
-          bottom: 20px;
-          right: 20px;
           transform: none;
 
           span {

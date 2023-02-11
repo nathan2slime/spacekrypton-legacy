@@ -33,7 +33,7 @@ export class KryApp {
   @Prop() items = [];
 
   @State() drawer: boolean;
-  @State() sidebar: boolean;
+  @State() sidebar: boolean = true;
   @State() currentItem: number = 0;
 
   @Event({ composed: false }) kryRedirect: EventEmitter<string>;
@@ -63,11 +63,6 @@ export class KryApp {
         name: i18n.satellites,
         route: '/',
         icon: 'ri-global-',
-      },
-      {
-        name: i18n.news,
-        route: '/news',
-        icon: 'ri-newspaper-',
       },
     ];
   }
@@ -135,7 +130,8 @@ export class KryApp {
           </main>
 
           <kry-alert
-            {...this.alert}
+            open={this.alert.open}
+            color={this.alert.color}
             onKryClose={() => this.kryAlert.emit({ ...this.alert, open: false })}
           >
             <p>{this.alert?.title}</p>

@@ -19,7 +19,10 @@ export type WebI18n = {
   form: {
     email: string;
     password: string;
+    required: string;
     search: string;
+    limit: (value: number) => string;
+    invalidEmail: string;
     username: string;
   };
   satellites: {
@@ -53,6 +56,7 @@ export type WebI18n = {
   sidebar: {
     logout: string;
     profile: string;
+    index: string;
     login: string;
     signup: string;
     satellites: string;

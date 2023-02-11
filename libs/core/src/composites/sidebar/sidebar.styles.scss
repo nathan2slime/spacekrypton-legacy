@@ -10,7 +10,7 @@
     width: 100%;
     height: 100vh;
     height: 100dvh;
-    background-color: var(--background-color-down);
+    background-color: var(--background-color-up);
     background-size: cover;
 
     display: flex;
@@ -35,7 +35,7 @@
 
       img {
         width: 100%;
-        max-width: 60px;
+        max-width: 70px;
         cursor: pointer;
         transition: all 0.3s;
         image-rendering: optimizeQuality;

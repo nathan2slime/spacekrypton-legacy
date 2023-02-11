@@ -39,4 +39,9 @@ export class UserResolver {
   ): Promise<User> {
     return await this.userServices.update(data, ctx.user, ctx.lang);
   }
+
+  @Query(() => User)
+  async Profile(@Arg('id') data: string, @Ctx() ctx: AppContext): Promise<User> {
+    return await this.userServices.getById(data, ctx.lang);
+  }
 }
