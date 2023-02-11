@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { KryLoading, KrySatellites, KryToggleEarth } from '@kry/react';
 import { BallTriangle, MutatingDots } from 'react-loader-spinner';
 import { useRouter } from 'next/router';
@@ -19,7 +19,7 @@ import {
   SatelliteSort,
   UserLocation,
 } from '@/types/satellites.types';
-import { AppState } from '@/store';
+import { AppState, useTypedDispatch } from '@/store';
 import { setAlertAction } from '@/store/actions/alert.actions';
 import { langs } from '@kry/i18n';
 import {
@@ -30,12 +30,15 @@ import {
 } from '@/store/actions/satellites.actions';
 
 import background from '@/assets/images/auth_background.png';
+import { favoriteSatelliteAction } from '@/store/actions/auth.actions';
+import { favoriteSatelliteThunk } from '@/store/thunks/auth.thunks';
 
 const Satellites: NextPage<any> = () => {
   const { push, pathname } = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const {
     lang,
+    auth: { user },
     satellites: { data: satellites, location, loading3d, view },
   } = useSelector((state: AppState) => state);
 
@@ -142,6 +145,13 @@ const Satellites: NextPage<any> = () => {
     }
   };
 
+  const favoriteSatellite = async (id: number) => {
+    if (user) {
+      id && dispatch(favoriteSatelliteAction(id));
+      dispatch(favoriteSatelliteThunk());
+    }
+  };
+
   useEffect(() => {
     setMessageLoading(i18n.getAltitude);
     setCurrentFilter(filter[0]);
@@ -156,13 +166,14 @@ const Satellites: NextPage<any> = () => {
       loading3D={loading3d}
       satellites={satellites}
       search={search}
-      favorites={[]}
+      favorites={user ? user.satellites : []}
       language={lang}
       pathname={pathname}
       onKryChangeSearch={e => setSearch(e.detail)}
       onKryLocation={e => onGetAltitude(e.detail)}
       onKryFilter={e => setCurrentFilter(e.detail)}
       onKrySearch={() => onStartSearch()}
+      onKryFavoriteSatellite={e => favoriteSatellite(e.detail.id)}
       onKryToggleLoading3D={e => dispatch(setLoading3DSatellitesViewAction(e.detail))}
       onKryFallback={() => push('/')}
       onKryTrackSatellite={e => push('/satellites/' + e.detail)}

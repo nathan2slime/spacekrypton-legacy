@@ -33,13 +33,11 @@ export class KryCardSatellite {
 
             {this.favorite ? (
               <kry-icon
-                title="Favorite"
                 onClick={() => this.kryFavoriteSatellite.emit(false)}
                 name="ri-heart-3-fill"
               />
             ) : (
               <kry-icon
-                title="Favorite"
                 onClick={() => this.kryFavoriteSatellite.emit(true)}
                 name="ri-heart-3-line"
               />

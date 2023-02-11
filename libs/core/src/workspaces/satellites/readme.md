@@ -12,6 +12,7 @@
 | `language`      | `language`       |             | `"en" \| "pt-BR"`                               | `undefined` |
 | `loading`       | `loading`        |             | `boolean`                                       | `undefined` |
 | `loading3D`     | `loading-3-d`    |             | `boolean`                                       | `undefined` |
+| `location`      | --               |             | `GeolocationPosition`                           | `undefined` |
 | `pathname`      | `pathname`       |             | `string`                                        | `undefined` |
 | `satellites`    | --               |             | `Satellite[]`                                   | `[]`        |
 | `search`        | `search`         |             | `string`                                        | `undefined` |

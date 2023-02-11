@@ -1,12 +1,22 @@
 import graphql from '@/graphql';
-import { loginMutation, signupMutation } from '@/graphql/mutations/auth.mutations';
-import { CreateUserInput, LoginInput } from '@kry/api/src/graphql/schemas/users.schemas';
+import {
+  loginMutation,
+  signupMutation,
+  favoriteSatelliteMutation,
+} from '@/graphql/mutations/auth.mutations';
+import {
+  CreateUserInput,
+  LoginInput,
+  UpdateUserInput,
+} from '@kry/api/src/graphql/schemas/users.schemas';
 import {
   AuthReponse,
   CreateUserPayload,
   LoginPayload,
   LoginResponse,
   SignupResponse,
+  UpdateUserPayload,
+  UpdateUserResponse,
   UserReponse,
   UserType,
 } from '@/types/auth.types';
@@ -35,5 +45,15 @@ export const authService = async () =>
     query: authQuery,
     type: 'query',
     variables: {},
+    notify: false,
+  });
+
+export const favoriteSatelliteService = async (user: UpdateUserInput) =>
+  await graphql<UpdateUserResponse, UpdateUserPayload>({
+    query: favoriteSatelliteMutation,
+    type: 'mutation',
+    variables: {
+      user,
+    },
     notify: false,
   });

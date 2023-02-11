@@ -11,7 +11,7 @@
 | `homeIcon`   | `home-icon`   |             | `string`        | `'ri-map-pin-user-fill'`          |
 | `labelHome`  | `label-home`  |             | `string`        | `''`                              |
 | `latitude`   | `latitude`    |             | `number`        | `undefined`                       |
-| `layer`      | `layer`       |             | `string`        | `layer`                           |
+| `layer`      | `layer`       |             | `string`        | `layers.dark`                     |
 | `lines`      | --            |             | `KryMapPoint[]` | `[]`                              |
 | `longitude`  | `longitude`   |             | `number`        | `undefined`                       |
 | `markHome`   | `mark-home`   |             | `boolean`       | `undefined`                       |

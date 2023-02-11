@@ -7,6 +7,7 @@ import {
   AuthUser,
   CreateUserInput,
   LoginInput,
+  UpdateUserInput,
   User,
   UserModel,
 } from '../graphql/schemas/users.schemas';
@@ -60,6 +61,16 @@ export class UserServices {
     const token = createAuthToken({ id: user.id });
 
     return { user: gqlModelTransform<User>(user), token };
+  }
+
+  async update(data: UpdateUserInput, id: number, lang: AppI18nLang) {
+    if (!id) throw getErrorMessage(727, lang);
+    log.start('updating user with id', id);
+
+    const user = await UserModel.findOneAndUpdate({ id }, { ...data }, { new: true });
+    log.complete('user updated with id', id);
+
+    return gqlModelTransform<User>(user);
   }
 
   async getByEmail(email: string) {

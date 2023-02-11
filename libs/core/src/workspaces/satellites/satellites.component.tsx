@@ -40,6 +40,7 @@ export class KrySatellites {
   @Prop() currentFilter: FilterSatellites;
   @Prop() type: '2D' | '3D' = '3D';
   @Prop() loading3D: boolean;
+  @Prop({ mutable: true }) location: GeolocationPosition;
 
   @Event({ composed: false }) kryLocation: EventEmitter<false | GeolocationPosition>;
   @Event({ composed: false }) kryFallback: EventEmitter<boolean>;
@@ -52,7 +53,6 @@ export class KrySatellites {
   @Event({ composed: false }) kryTrackSatellite: EventEmitter<number>;
   @Event({ composed: false }) kryToggleLoading3D: EventEmitter<boolean>;
 
-  @State() location: GeolocationPosition;
   @State() points: KryMapPoint[] = [];
   @State() dialog: boolean;
   @State() globalCoords: GlobalCoords[] = [];

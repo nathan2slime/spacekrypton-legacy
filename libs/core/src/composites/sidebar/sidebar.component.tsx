@@ -57,6 +57,10 @@ export class KrySidebar {
     const styles = {
       backgroundImage: `url(${this.background})`,
     };
+    const avatarStyles = {
+      backgroundImage: `url(${this.user.avatar})`,
+    };
+
     const i18n = langs[this.language].web.sidebar;
 
     return (
@@ -83,14 +87,24 @@ export class KrySidebar {
           </div>
 
           {!this.open && (
-            <div class="menu">
-              <kry-sidebar-item
-                onClick={() => (this.dropdown = !this.dropdown)}
-                kry-dropdown="logout-collapsed"
-                open={this.open}
-                icon="ri-menu-4-"
-                active
-              />
+            <div class={{ logged: this.logged, menu: true }}>
+              {this.logged ? (
+                <div>
+                  <div
+                    style={avatarStyles}
+                    kry-dropdown="logout-collapsed"
+                    onClick={() => (this.dropdown = !this.dropdown)}
+                  />
+                </div>
+              ) : (
+                <kry-sidebar-item
+                  kry-dropdown="logout-collapsed"
+                  onClick={() => (this.dropdown = !this.dropdown)}
+                  open={this.open}
+                  icon="ri-menu-4-"
+                  active
+                />
+              )}
             </div>
           )}
 
@@ -141,6 +155,7 @@ export class KrySidebar {
               language={this.language}
               onKryRedirect={e => this.kryRedirect.emit(e.detail)}
               onKryToggleDropdown={e => (this.dropdownLogout = e.detail)}
+              onKryDialogLogout={() => (this.dialogLogout = true)}
               open={this.dropdownLogout}
             />
           ) : (
