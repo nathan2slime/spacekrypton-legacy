@@ -253,7 +253,7 @@ export class KrySatellites {
 
               return (
                 <kry-card-satellite
-                  favorite={this.favorites.includes(satellite.id)}
+                  favorite={this.favorites?.includes(satellite.id)}
                   satname={satellite.name}
                   timestamp={new Date(timestamp).toLocaleString()}
                   eclipsed={eclipsed}

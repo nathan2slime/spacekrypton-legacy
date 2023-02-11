@@ -149,6 +149,8 @@ const Satellites: NextPage<any> = () => {
     if (user) {
       id && dispatch(favoriteSatelliteAction(id));
       dispatch(favoriteSatelliteThunk());
+    } else {
+      push('/auth/login');
     }
   };
 

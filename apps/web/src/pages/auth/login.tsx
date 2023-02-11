@@ -15,20 +15,11 @@ import { AppState } from '@/store';
 import { langs } from '@kry/i18n';
 import envs from '@kry/envs';
 
-import { appErrors } from '../../utils/err';
 import { loginService } from '../../services/auth.services';
 import { setAuthAction, setUserAction } from '../../store/actions/auth.actions';
+import { getFieldMessage } from '@/utils/funcs';
 
 import background from '../../assets/images/auth_background.png';
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required(appErrors.messages.required)
-    .trim()
-    .email(appErrors.messages.email),
-  password: yup.string().required(appErrors.messages.required),
-});
 
 const Login: NextPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +28,11 @@ const Login: NextPage = () => {
   const { lang } = useSelector((state: AppState) => state);
 
   const i18n = langs[lang].web;
+
+  const schema = yup.object().shape({
+    email: yup.string().required(i18n.form.required).trim().email(i18n.form.invalidEmail),
+    password: yup.string().required(i18n.form.required),
+  });
 
   const {
     register,
@@ -90,8 +86,8 @@ const Login: NextPage = () => {
       isLoading={isLoading}
       labelEmail={i18n.form.email}
       labelPassword={i18n.form.password}
-      passwordMessage={appErrors.getMessage('password', errors)}
-      emailMessage={appErrors.getMessage('email', errors)}
+      passwordMessage={getFieldMessage('password', errors)}
+      emailMessage={getFieldMessage('email', errors)}
       onKryChangeEmail={e => setValue('email', e.detail, { shouldValidate: true })}
       onKryChangePassword={e => setValue('password', e.detail, { shouldValidate: true })}
       onKryAuth={onLogin}

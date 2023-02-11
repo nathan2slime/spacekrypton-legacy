@@ -15,21 +15,11 @@ import { AppState } from '@/store';
 import { withGuard } from '@/components/guards/auth';
 import { CreateUserInput } from '@kry/api/src/graphql/schemas/users.schemas';
 
-import { appErrors } from '../../utils/err';
-import { signupService } from '../../services/auth.services';
-import { setAuthAction, setUserAction } from '../../store/actions/auth.actions';
+import { signupService } from '@/services/auth.services';
+import { setAuthAction, setUserAction } from '@/store/actions/auth.actions';
+import { getFieldMessage } from '@/utils/funcs';
 
-import background from '../../assets/images/auth_background.png';
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required(appErrors.messages.required)
-    .trim()
-    .email(appErrors.messages.email),
-  password: yup.string().required(appErrors.messages.required),
-  username: yup.string().required(appErrors.messages.required),
-});
+import background from '@/assets/images/auth_background.png';
 
 const Signup: NextPage = () => {
   const dispatch = useDispatch();
@@ -39,6 +29,12 @@ const Signup: NextPage = () => {
   const { lang } = useSelector((state: AppState) => state);
 
   const i18n = langs[lang].web;
+
+  const schema = yup.object().shape({
+    email: yup.string().required(i18n.form.required).trim().email(i18n.form.invalidEmail),
+    password: yup.string().required(i18n.form.required),
+    username: yup.string().required(i18n.form.required).length(15, i18n.form.limit(15)),
+  });
 
   const {
     register,
@@ -94,9 +90,9 @@ const Signup: NextPage = () => {
       labelPassword={i18n.form.password}
       labelUsername={i18n.form.username}
       isInvalid={!isValid}
-      passwordMessage={appErrors.getMessage('password', errors)}
-      usernameMessage={appErrors.getMessage('username', errors)}
-      emailMessage={appErrors.getMessage('email', errors)}
+      passwordMessage={getFieldMessage('password', errors)}
+      usernameMessage={getFieldMessage('username', errors)}
+      emailMessage={getFieldMessage('email', errors)}
       onKryChangeEmail={e => setValue('email', e.detail, { shouldValidate: true })}
       onKryChangePassword={e => setValue('password', e.detail, { shouldValidate: true })}
       onKryChangeUsername={e => setValue('username', e.detail, { shouldValidate: true })}

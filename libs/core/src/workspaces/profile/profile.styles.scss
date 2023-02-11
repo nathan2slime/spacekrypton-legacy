@@ -23,5 +23,52 @@
     scroll-behavior: auto;
 
     @include scrollbar;
+
+    .thumb,
+    .avatar {
+      background-position: top center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 40vh;
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+
+      padding: 10px;
+      margin-bottom: 80px;
+    }
+
+    .username {
+      padding: 14px 40px;
+      border-radius: 10px;
+      width: fit-content;
+      margin: auto;
+      background: var(--foreground-color-up);
+
+      p {
+        font-size: 0.875rem;
+        font-family: var(--primary-font-family);
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--secondary-color-up);
+      }
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      background-position: center;
+      bottom: -60px;
+      left: 50%;
+      border: 2px solid var(--foreground-color-up);
+      position: absolute;
+      border-radius: 100%;
+      transform: translateX(-50%);
+    }
   }
 }

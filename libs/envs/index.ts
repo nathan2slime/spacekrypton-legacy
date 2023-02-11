@@ -17,6 +17,7 @@ export default {
       getElevation: process.env.GPXZ_API_KEY as string,
     },
     url: {
+      api: process.env.API_URL || 'http://localhost:3000',
       satelliteTracking:
         process.env.SATELLITE_TRACKING_API_URL ||
         'https://api.n2yo.com/rest/v1/satellite',
