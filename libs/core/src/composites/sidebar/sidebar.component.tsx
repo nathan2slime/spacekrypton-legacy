@@ -118,16 +118,6 @@ export class KrySidebar {
             {this.logged ? (
               <Fragment>
                 <kry-dropdown-item
-                  hover
-                  name={i18n.profile}
-                  onClick={() => {
-                    this.kryRedirect.emit('/profile/me');
-                    this.dropdown = false;
-                  }}
-                  icon="ri-user-3-"
-                />
-
-                <kry-dropdown-item
                   hover={false}
                   name={i18n.logout}
                   icon="ri-logout-circle-"

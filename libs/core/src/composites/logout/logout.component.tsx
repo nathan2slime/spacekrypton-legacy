@@ -40,13 +40,6 @@ export class KryLogout {
             onKryClose={() => this.kryToggleDropdown.emit(false)}
           >
             <kry-dropdown-item
-              hover
-              name={langs[this.language].web.sidebar.profile}
-              onClick={() => this.kryRedirect.emit('/profile/me')}
-              icon="ri-user-3-"
-            />
-
-            <kry-dropdown-item
               hover={false}
               name={langs[this.language].web.sidebar.logout}
               icon="ri-logout-circle-"
