@@ -84,7 +84,7 @@ const graphql = async <F, T extends {}>({
 
     if (message.includes('504')) {
       const lang = getLocalStorageItem(envs.localStorageKeys.lang);
-      sendMessage(langs[lang as AppI18nLang].err.errorUnknow);
+      sendMessage(langs[lang as AppI18nLang].err.timeoutError);
     } else if (notify) {
       sendMessage(message);
     }

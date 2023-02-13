@@ -5478,10 +5478,10 @@ dotenv@^16.0.3:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
   integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
-earth-satellites@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/earth-satellites/-/earth-satellites-0.0.4.tgz#dd903dd43924e205cd996ebf6be32053579bdc02"
-  integrity sha512-vtpGmxXE7W0hX9k6uIpRbLWIcZjtZsxdWe7kCPobXp20rqwKBTAUg6LGhOvPyUCNsulMtbROQIE5nmuCVN48fA==
+earth-satellites@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/earth-satellites/-/earth-satellites-0.0.6.tgz#581cb1f12ff27313dd0588fee1bde871e2df71e1"
+  integrity sha512-FWZ+znDwyfaPn9nZ4xwV/m5m0HEhTZUItgoCa6rHvcyBXRqV+99DIp5UtFdphC71i9i5nkgIFC2h38l7By7CZg==
   dependencies:
     "@stencil/core" "^3.0.0"
     axios "^1.3.2"
