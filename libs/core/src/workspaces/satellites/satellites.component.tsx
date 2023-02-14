@@ -73,6 +73,7 @@ export class KrySatellites {
   }
 
   @Watch('type')
+  @Watch('globalCoords')
   listenTypeView() {
     if (this.type == '3D') {
       this.earth = document.createElement('earth-satellites');
@@ -81,6 +82,8 @@ export class KrySatellites {
         this.earth.coordinates = this.globalCoords;
         this.earthWrapper.appendChild(this.earth);
       }
+
+      this.stopLoading3D();
     } else {
       this.map && this.map.resizeMap();
     }
@@ -103,8 +106,6 @@ export class KrySatellites {
       });
 
       this.globalCoords = this.getGlobalCoords();
-
-      this.stopLoading3D();
     }
   }
 
