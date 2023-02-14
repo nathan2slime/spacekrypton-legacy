@@ -73,11 +73,13 @@ export class KrySatellites {
   }
 
   @Watch('type')
+  @Watch('globalCoords')
   listenTypeView() {
     if (this.type == '3D') {
-      this.earth = document.createElement('earth-satellites-component');
+      this.earth = document.createElement('earth-satellites');
 
       if (this.earthWrapper) {
+        this.earth.coordinates = this.globalCoords;
         this.earthWrapper.appendChild(this.earth);
       }
 
